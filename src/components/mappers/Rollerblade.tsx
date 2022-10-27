@@ -1,12 +1,14 @@
 import React, { useState } from "react";  
 import { useEffect } from "react";
 import { read, utils, writeFile } from 'xlsx';
+import ScrollToTop from "react-scroll-to-top";
 
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import Table from 'react-bootstrap/Table';;
+import Table from '../shared/Table';
 
 const RollerbladeMapper = () => {
     const [products, setProducts] = useState([]);
@@ -37,9 +39,16 @@ const RollerbladeMapper = () => {
 
     const handleExport = () => {
         const headings = [[
-            'name',
-            'es',
-            'en'
+            'Id',
+            'EAN13',
+            'Reference',
+            'Prix',
+            'PVP',
+            'Stock',
+            'Nom',
+            'Color',
+            'Sizes',
+            'Active'
         ]];
         const wb = utils.book_new();
         const ws = utils.json_to_sheet([]);
@@ -125,86 +134,73 @@ const RollerbladeMapper = () => {
             ...item,
             pvp: parseFloat(item.prix * 2.01).toFixed(2),
             color: allColors[index],
-            size: allSizes[index]
+            size: allSizes[index],
+            active: 0
           }));
 
-        console.log("mapped >", mapped);
         setListName(mapped);
     }
 
-    useEffect(() => {
-        console.log("ListName", listName);
-    }, [listName])
+    const headers = [
+        "Id",
+        "Ref Mere",
+        "Reference",
+        "EAN13",
+        "Prix",
+        "PVP",
+        "Stock",
+        "Nom",
+        "Color",
+        "Sizes",
+        "Active"
+    ]
+
+    const dataItems = [
+        "id",
+        "refmere",
+        "reference",
+        "ean",
+        "prix",
+        "pvp",
+        "stock",
+        "nom",
+        "color",
+        "size",
+        "active"
+    ]
 
     return (
         <>
         <Container fluid>
             <Row>
-                <Col>
-                    <div className="input-group">
-                        <div className="custom-file">
-                            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" htmlFor="file_input">Cargar CSV</label>
-                            <input name="file" className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="inputGroupFile" type="file" required onChange={handleImport} accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
-                        </div>
-                    </div>
+                <Col className="centerRow">
+                    <Form.Group controlId="formFile" className="mb-3">
+                        <Form.Label>Cargar CSV</Form.Label>
+                        <Form.Control type="file" required onChange={handleImport} accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+                    </Form.Group>
                 </Col>
-                <Col>
-                    <Button type="button" variant="outline-primary" onClick={handleExport}>
-                        Export 
-                    </Button>
-                </Col>
-            </Row>
+                { listName.length > 0 && 
+                    <>
+                        <Col>
+                            <Button type="button" variant="outline-primary" onClick={handleExport}>
+                                Export Products
+                            </Button>
+                        </Col>
+                        <Col>
+                            <Button type="button" variant="outline-primary" onClick={handleExport}>
+                                Export Combinations
+                            </Button>
+                        </Col> 
+                    </>
+                }
+            </Row>               
         </Container>
         <Container className="mt-4" fluid>
             <Row>
                 <Col>
-                <Table striped bordered hover>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Id</th>
-                            <th>Ref Mere</th>
-                            <th>reference</th>
-                            <th>ean18</th>
-                            <th>prix</th>
-                            <th>pvp</th>
-                            <th>stock</th>
-                            <th>nom</th>
-                            <th>color</th>
-                            <th>sizes</th>
-                        </tr>
-                    </thead>
-                    <tbody>      
-                        {
-                            listName.length
-                            ?
-                            listName.map((product, index) => (
-                                <tr key={index}>
-                                    <td>{ index + 1 }</td>
-                                    <td>{ product.refmere }</td>
-                                    <td>{ product.reference }</td>
-                                    <td>{ product.ean }</td>
-                                    <td>{ product.prix }</td>
-                                    <td>{ product.pvp }</td>
-                                    <td>{ product.stock }</td>
-                                    <td>{ product.nom }</td>
-                                    <td>{ product.color }</td>
-                                    <td>{ product.size }</td>
-                                </tr> 
-                            ))
-                            :
-                            <tr>
-                                <td colSpan="11">
-                                { !products.length > 0 
-                                    ? <span>Esperando cargar datos</span>
-                                    : <span>Cargando datos...</span>
-                                }
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </Table>
-            </Col>
+                    <Table data={listName} page={1} rowsPerPage={50} headers= {headers} dataItems={dataItems} />
+                    <ScrollToTop smooth />
+                </Col>
             </Row>
         </Container>
         </>
