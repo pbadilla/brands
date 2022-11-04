@@ -1,47 +1,46 @@
-import { read, utils, writeFile } from 'xlsx';
+import { read, utils, writeFile } from 'xlsx'
 
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Button from 'react-bootstrap/Button'
 
 export const InputFile = () => {
-    const handleImport = ($event) => {
-        const files = $event.target.files;
-        if (files.length) {
-            const file = files[0];
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                const wb = read(event.target.result);
-                
-                const sheets = wb.SheetNames;
-                        
-                if (sheets.length) {
-                    const rows = utils.sheet_to_json(wb.Sheets[sheets[0]]);
-                    setProducts(rows)
-                }
-            }
-            reader.readAsArrayBuffer(file);
-        }
-        
-    }
+  const handleImport = ($event) => {
+    const files = $event.target.files
+    if (files.length) {
+      const file = files[0]
+      const reader = new FileReader()
+      reader.onload = (event) => {
+        const wb = read(event.target.result)
 
-    const handleExport = () => {
-        const headings = [[
-            'name',
-            'es',
-            'en'
-        ]];
-        const wb = utils.book_new();
-        const ws = utils.json_to_sheet([]);
-        utils.sheet_add_aoa(ws, headings);
-        utils.sheet_add_json(ws, products, { origin: 'A2', skipHeader: true });
-        utils.book_append_sheet(wb, ws, 'Report');
-        writeFile(wb, 'products.xlsx');
+        const sheets = wb.SheetNames
+
+        if (sheets.length > 0) {
+          const rows = utils.sheet_to_json(wb.Sheets[sheets[0]])
+          setProducts(rows)
+        }
+      }
+      reader.readAsArrayBuffer(file)
     }
-    
-    return(
-    <Container fluid> 
+  }
+
+  const handleExport = () => {
+    const headings = [[
+      'name',
+      'es',
+      'en'
+    ]]
+    const wb = utils.book_new()
+    const ws = utils.json_to_sheet([])
+    utils.sheet_add_aoa(ws, headings)
+    utils.sheet_add_json(ws, products, { origin: 'A2', skipHeader: true })
+    utils.book_append_sheet(wb, ws, 'Report')
+    writeFile(wb, 'products.xlsx')
+  }
+
+  return (
+    <Container fluid>
         <Row>
             <Col>
                 <div className="input-group">
@@ -53,11 +52,10 @@ export const InputFile = () => {
             </Col>
             <Col>
                 <Button variant="primary" onClick={handleExport}>
-                    Export 
+                    Export
                 </Button>
             </Col>
         </Row>
     </Container>
-    )
-};
-
+  )
+}

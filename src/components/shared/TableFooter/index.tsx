@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react'
 
-import "./styles.css";
+import './styles.css'
 
 const TableFooter = ({ range, setPage, page, slice }) => {
   useEffect(() => {
     if (slice.length < 1 && page !== 1) {
-      setPage(page - 1);
+      setPage(page - 1)
     }
-  }, [slice, page, setPage]);
+  }, [slice, page, setPage])
 
   return (
     <div className="tableFooter">
@@ -15,7 +15,7 @@ const TableFooter = ({ range, setPage, page, slice }) => {
         <button
           key={index}
           className={`button ${
-            page === el ? "activeButton" : "inactiveButton"
+            page === el ? 'activeButton' : 'inactiveButton'
           }`}
           onClick={() => setPage(el)}
         >
@@ -23,7 +23,7 @@ const TableFooter = ({ range, setPage, page, slice }) => {
         </button>
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default TableFooter;
+export default TableFooter
