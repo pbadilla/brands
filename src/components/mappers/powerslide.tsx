@@ -1,13 +1,18 @@
 import React, { useState } from 'react'
 import { read, utils, writeFile } from 'xlsx'
-import ScrollToTop from 'react-scroll-to-top'
+import groupBy from 'lodash.groupby'
+import _, { constant } from 'lodash'
 
 import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
-import Table from '../shared/Table'
+
+import DataTable, { ExpanderComponentProps } from 'react-data-table-component';
+import ScrollToTop from 'react-scroll-to-top'
+
+import { columnsPower, headingsPower } from '../../utils/constants';
 
 const PowerSlideMapper = () => {
   const [products, setProducts] = useState([])
@@ -32,6 +37,16 @@ const PowerSlideMapper = () => {
     }
   }
 
+  const groupProductsList = (products) => {
+    const productsList = [];
+    const grouped = _.mapValues(_.groupBy(products, 'Artikelnr')); 
+    for (const [key, value] of Object.entries(grouped)) {
+      productsList.push(value[0])
+    }
+    return productsList;
+  }
+
+
   const productsMapped = (listParam: any) => {
     const mapped = listParam.map((item: any, index: Number) => ({
       ...item,
@@ -45,26 +60,14 @@ const PowerSlideMapper = () => {
     mapped.map((item: any, index: Number) => {
       if (item.stock !== null) {
         productList.push(item)
-      };
+      }
     })
-    setProducts(productList)
-    setListName(productList)
+    setProducts(groupProductsList(productList));
+    setListName(groupProductsList(productList));
   }
 
   const handleExport = () => {
-    const headings = [[
-      'Id',
-      'EAN13',
-      'Reference',
-      'Prix',
-      'PVP',
-      'Stock',
-      'Nom',
-      'Desxcription',
-      'Color',
-      'Sizes',
-      'active'
-    ]]
+    const headings = [headingsPower]
     const wb = utils.book_new()
     const ws = utils.json_to_sheet([])
     utils.sheet_add_aoa(ws, headings)
@@ -73,31 +76,24 @@ const PowerSlideMapper = () => {
     writeFile(wb, 'products_Powerslide.csv')
   }
 
-  const headers = [
-    'Art. Id',
-    'Art. Num',
-    'EAN13',
-    'Nombre',
-    'Description',
-    'Talla',
-    'Color',
-    'Stock',
-    'PVP',
-    'active'
-  ]
+  type DataRow = {
+    description: string;
+    name: string;
+    brand: string;
+  };
+  // data provides access to your row data
+  const ExpandedComponent: FC<ExpanderComponentProps<DataRow>> = ({ data }) => {
+    const unsortedMap = Object.entries(data);
+    const unsortedArray = [...unsortedMap];
+    const sortedArray = unsortedArray.sort();
+    const sortedData = Object.fromEntries(sortedArray);
+    return <pre>{JSON.stringify(sortedData, null, 2)}</pre>;
+  };
 
-  const dataItems = [
-    'ArtikelId',
-    'Artikelnr',
-    'EAN',
-    'Artikelbezeichnung',
-    'description',
-    'MM1',
-    'MM2',
-    'Bestand',
-    'pvp',
-    'active'
-  ]
+  const handleChange = ({ selectedRows }) => {
+    // You can set state or dispatch with something like Redux so we can use the retrieved data
+    console.log('Selected Rows: ', selectedRows);
+  };
 
   return (
         <>
@@ -126,12 +122,27 @@ const PowerSlideMapper = () => {
             </Row>
         </Container>
         <Container className="mt-4" fluid>
-            <Row>
-                <Col>
-                    <Table data={listName} page={1} rowsPerPage={50} headers= {headers} dataItems={dataItems} />
-                    <ScrollToTop smooth />
-                </Col>
-            </Row>
+          <Row>
+              <Col>
+                <DataTable
+                  columns={columnsPower}
+                  data={listName}
+                  expandableRows 
+                  expandableRowsComponent={ExpandedComponent}
+                  highlightOnHover={true}
+                  selectableRows
+                  onSelectedRowsChange={handleChange}
+                  pagination
+                  paginationPerPage={30}
+                  paginationRowsPerPageOptions={[30, 50, 100]}
+                  persistTableHead={true}
+                  pointerOnHover={true}
+                  striped={true}
+                  title="POWERSLIDE"
+                />
+                <ScrollToTop smooth />
+              </Col>
+          </Row>
         </Container>
         </>
 

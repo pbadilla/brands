@@ -16,7 +16,6 @@ export const headingsSeba = [
   'active'
 ]
 
-
 export const headingsRollerblade = [
   'ArtCodigo',
   'ArtNombre',
@@ -29,6 +28,20 @@ export const headingsRollerblade = [
   'SKU',
   'Talla',
   'Udsxpack'
+]
+
+export const headingsPower = [
+  'Id',
+  'EAN13',
+  'Reference',
+  'Prix',
+  'PVP',
+  'Stock',
+  'Nom',
+  'Desxcription',
+  'Color',
+  'Sizes',
+  'active'
 ]
 
 export const headersTable = [
@@ -444,6 +457,65 @@ export const columnsRollerblade = [
   {
     name: 'Uds x pack',
     selector: row => row.Udsxpack,
+    sortable: true
+  },
+  {
+    name: 'Active',
+    selector: row => row.active,
+    sortable: true
+  }
+]
+
+
+export const columnsPower = [
+  {
+    name: 'Art. Id',
+    selector: row => row.ArtikelId,
+    sortable: true
+  },
+  {
+    name: 'Art. Num',
+    selector: row => row.Artikelnr,
+    sortable: true
+  },
+  {
+    name: 'EAN13',
+    selector: row => row.EAN,
+    sortable: true
+  },
+  {
+    name: 'Nombre',
+    selector: row => row.Artikelbezeichnung,
+    sortable: true
+  },
+  {
+    name: 'EAN',
+    selector: row => row.EAN,
+    sortable: true
+  },
+  {
+    name: 'Description',
+    selector: row => row.description,
+    sortable: true
+  },
+  {
+    name: 'Talla',
+    selector: row => row.MM1,
+    sortable: true
+  },
+  {
+    name: 'Color',
+    selector: row => row.MM2,
+    sortable: true
+  },
+  {
+    name: 'Stock',
+    selector: row => row.Bestand,
+    sortable: true
+  },
+  {
+    name: 'PVP',
+    selector: row => row.pvp,
     sortable: true
   },
   {

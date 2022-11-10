@@ -213,8 +213,6 @@ export function extractCSizes(reference:string) {
   }
 }
 
-
-
 export function sizesAndColorOfProducts (allReferences: []) {
     const allColors: (string | undefined)[] = [];
     const allSizes: (string | undefined)[] = [];

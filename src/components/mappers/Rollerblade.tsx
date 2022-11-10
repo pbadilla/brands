@@ -1,6 +1,8 @@
 import React, { FC, useState, useEffect } from 'react'
 
 import { read, utils, writeFile } from 'xlsx'
+import groupBy from 'lodash.groupby'
+import _, { constant } from 'lodash'
 import ScrollToTop from 'react-scroll-to-top'
 import DataTable, { ExpanderComponentProps } from 'react-data-table-component';
 
@@ -31,30 +33,34 @@ const SebaMapper = () => {
 
         if (sheets.length > 0) {
           const rows = utils.sheet_to_json(wb.Sheets[sheets[0]])
-          normalizeHeaders(rows)
+          const finalProducts = addActiveStatus(rows);
+          setProducts(groupProductsList(finalProducts));
+          setListName(groupProductsList(finalProducts));
         }
       }
       reader.readAsArrayBuffer(file)
     }
   }
 
-  const transformKey = (key: string) => {
-    let tempKey = "";
-    tempKey = key.split('.').join("").replace(/\s/g,'');
-    return tempKey;
+  const addActiveStatus = (products) => {
+    const productsList = []
+    products.map((item, index) => {
+      productsList.push({
+        ...item,
+        id: index,
+        active: 0
+      })
+    })
+    return productsList;
   }
 
-  const normalizeHeaders = (productsOnBrut: any[]) => {
-    let productTemp = {}
-    const productList = []
-    productsOnBrut.map((item, index) => {
-      for (const [key, value] of Object.entries(item)) {
-        productTemp[`${transformKey(key)}`] = value;
-      }
-      productList.push(productTemp)
-    });
-    setProducts(productList);
-    setListName(productList);
+  const groupProductsList = (products) => {
+    const productsList = [];
+    const grouped = _.mapValues(_.groupBy(products, 'ArtCodigo')); 
+    for (const [key, value] of Object.entries(grouped)) {
+      productsList.push(value[0])
+    }
+    return productsList;
   }
 
   const handleExport = () => {

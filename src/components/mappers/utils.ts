@@ -13,3 +13,23 @@ export const calculateRange = (data, rowsPerPage) => {
 export const sliceData = (data, page, rowsPerPage) => {
   return data.slice((page - 1) * rowsPerPage, page * rowsPerPage)
 }
+
+
+const transformKey = (key: string) => {
+  let tempKey = "";
+  tempKey = key.split('.').join("").replace(/\s/g,'');
+  return tempKey;
+}
+
+const normalizeHeaders = (productsOnBrut: any[]) => {
+  const productList = []
+  productsOnBrut.map((item, index) => { 
+  let productTemp = ""
+  for (const [key, value] of Object.entries(item)) {
+    const tempItem = `${transformKey(key)}: ${value}`;
+    console.log('%ctempItem', 'color: #007acc;', tempItem);
+    productTemp +=tempItem;
+  }
+  });
+
+}

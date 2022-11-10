@@ -10,7 +10,7 @@ import Container from 'react-bootstrap/Container'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 
-import { changeColor, changeSize, columnsSeba, headingsSeba } from '../../utils/constants';
+import { columnsSeba, headingsSeba } from '../../utils/constants';
 import { sizesAndColorOfProducts } from '../../utils/utils';
 
 import './styles.css'
@@ -73,15 +73,10 @@ const SebaMapper = () => {
         })
       };
     }) 
-  
     const productsWithoutTransform = productList.filter(item => item);
     const productsList = sizesAndColorOfProducts(productsWithoutTransform);
-
-    console.log('%cproductsList', 'color: #007acc;', productsList.productsList);
-
     setProducts(productsList.productsList)
     setListName(productsList.productsList)
-
   }
 
   useEffect(() => {
