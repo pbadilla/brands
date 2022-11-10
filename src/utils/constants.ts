@@ -1,56 +1,84 @@
 export const headingsSeba = [
-  'Id',
-  'EAN13',
-  'Reference',
-  'Prix',
-  'PVP',
-  'Stock',
-  'Nom',
-  'Description',
-  'Color',
-  'Sizes',
-  'Active'
+, 'reference',
+  'ean13',
+  'Price tax excluded',
+  'stock',
+  'name',
+  'image',
+  'brand',
+  'refmere',
+  'color',
+  'sizes',
+  'Unit price',
+  'Quantity',
+  'ean13',
+  'pvp',
+  'active'
+]
+
+
+export const headingsRollerblade = [
+  'ArtCodigo',
+  'ArtNombre',
+  'ColorNombre',
+  'Descripcionlarga',
+  'EAN', 
+  'Foto', 
+  'Marca',
+  'PVPR',
+  'SKU',
+  'Talla',
+  'Udsxpack'
 ]
 
 export const headersTable = [
+  'id',
   'Ref. Origin',
-  'Reference',
   'EAN13',
+  'PVD',
+  'Stock',
   'Name',
+  'Image',
+  'Brand',
+  'Reference',
   'Description',
+  'PVP',
   'Color',
   'Sizes',
-  'PVD',
-  'PVP',
-  'Stock',
   'Active'
 ]
 
 const headers = [
+  'id',
   'Ref. Origin',
-  'Reference',
   'EAN13',
+  'PVD',
+  'Stock',
   'Name',
+  'Image',
+  'Brand',
+  'Reference',
   'Description',
+  'PVP',
   'Color',
   'Sizes',
-  'PVD',
-  'PVP',
-  'Stock',
   'Active'
 ]
 
 const dataItems = [
+  'id',
   'refmere',
-  'reference',
-  'ean',
+  'ean13',
+  'prix',
+  'stock',
   'nom',
+  'image',
+  'brand',
+  'reference',
   'description',
+  'pvp',
   'color',
   'size',
-  'prix',
-  'pvp',
-  'stock',
   'active'
 ]
 
@@ -148,7 +176,6 @@ export const changeSize = (originSize: string) => {
       return '40-42'
       break
     case '4 - 6':
-    case '4':
       return '35-37'
       break
     case '2730':
@@ -157,8 +184,14 @@ export const changeSize = (originSize: string) => {
     case '2734':
       return '27-34'
       break
+    case '2932':
+      return '29-32'
+      break
     case '3336':
       return '33-36'
+      break
+    case '3538':
+      return '35-38'
       break
     case '3740':
       return '37-40'
@@ -246,9 +279,6 @@ export const changeSize = (originSize: string) => {
     case '48':
       return '48'
       break
-    case '3538':
-      return '35-38'
-      break
     case 'JR':
       return 'Junior'
       break
@@ -276,12 +306,38 @@ export const changeSize = (originSize: string) => {
     case 'XXS':
       return 'DobleExtraSmall'
       break
+      case '72':
+        return '72mm'
+        break
+      case '80':
+        return '80mm'
+        break
+      case '76':
+        return '76mm'
+        break
+      case '100':
+        return '100mm'
+        break
+      case '110':
+        return '110mm'
+        break
+      case '125':
+        return '125mm'
+        break
+    case 'undefined':
+      return ""
+      break;
     default:
       break
   }
 }
 
 export const columnsSeba = [
+  {
+    name: 'ID',
+    selector: row => row.id,
+    sortable: true
+  },
   {
     name: 'Ref. Origin',
     selector: row => row.refmere,
@@ -330,6 +386,64 @@ export const columnsSeba = [
   {
     name: 'Stock',
     selector: row => row.stock,
+    sortable: true
+  },
+  {
+    name: 'Active',
+    selector: row => row.active,
+    sortable: true
+  }
+]
+
+export const columnsRollerblade = [
+  {
+    name: 'Art. Codigo',
+    selector: row => row.ArtCodigo,
+    sortable: true
+  },
+  {
+    name: 'Art. Nombre',
+    selector: row => row.ArtNombre,
+    sortable: true
+  },
+  {
+    name: 'Color Base',
+    selector: row => row.ColorNombre,
+    sortable: true
+  },
+  {
+    name: 'Descripcion larga',
+    selector: row => row.Descripcionlarga,
+    sortable: true
+  },
+  {
+    name: 'EAN',
+    selector: row => row.EAN,
+    sortable: true
+  },
+  {
+    name: 'Foto',
+    selector: row => row.Foto,
+    sortable: true
+  },
+  {
+    name: 'PVPR',
+    selector: row => row.PVPR,
+    sortable: true
+  },
+  {
+    name: 'SKU',
+    selector: row => row.SKU,
+    sortable: true
+  },
+  {
+    name: 'Talla',
+    selector: row => row.Talla,
+    sortable: true
+  },
+  {
+    name: 'Uds x pack',
+    selector: row => row.Udsxpack,
     sortable: true
   },
   {
