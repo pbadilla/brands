@@ -149,3 +149,38 @@ export function extracSameProduct(reference:string) {
 // }
 
          // transformProduct(rows);
+
+         Actividad: "Patinaje"
+         ArtCodigo: "061P0100"
+         ArtNombre: "PROTECCIONES ANKLE WRAP"
+         Año: "23"
+         CantidadMinima: "0"
+         CodArancelario: "9506 99 90"
+         CodPais: "VN"
+         ColorBase: "NEGRO"
+         ColorCodigo: "100"
+         ColorNombre: "BLACK"
+         Composición: "Alta resistencia a la tracción; la envoltura aumenta la longevidad del revestimiento"
+         Descripcionlarga: "Reduce la fricción. Ayuda a prevenir las ampollas. Cómodo. Lavable para múltiples usos. Es mejor llevarlo descalzo o con calcetines ultrafino y ligero. Construcción de doble capa Poliéster (55%), TPU (40%), Elastan (5%)"
+         EAN: "8050459837773"
+         EnMultiplosde: "0"
+         Estacion: "SS"
+         Familia: "ACCESORIOS TEXTIL"
+         Foto: "http://bmsportech.es/media/images/marcas/rollerblade/products/061P0100 100.UNICA.1.jpg"
+         Foto2: "http://bmsportech.es/media/images/marcas/rollerblade/products/061P0100 100.UNICA.2.jpg"
+         Foto3: "http://bmsportech.es/media/images/marcas/rollerblade/products/061P0100 100.UNICA.3.jpg"
+         Foto4: "http://bmsportech.es/media/images/marcas/rollerblade/products/061P0100 100.UNICA.4.jpg"
+         Foto5: "http://bmsportech.es/media/images/marcas/rollerblade/products/061P0100 100.UNICA.5.jpg"
+         Foto6: "http://bmsportech.es/media/images/marcas/rollerblade/products/061P0100 100.UNICA.6.jpg"
+         Foto7: "http://bmsportech.es/media/images/marcas/rollerblade/products/061P0100 100.UNICA.7.jpg"
+         Foto8: "http://bmsportech.es/media/images/marcas/rollerblade/products/061P0100 100.UNICA.8.jpg"
+         Linea: "CALCETINES"
+         Marca: "ROLLERBLADE"
+         PVPR: "19,99"
+         Perfil: "Unisex"
+         SKU: "061P0100 100 L"
+         Talla: "42-44"
+         Udsxpack: "1"
+         VendorItemNo: "061P0100 100"
+         active: 0
+         id: 0

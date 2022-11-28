@@ -14,15 +14,14 @@ import Row from 'react-bootstrap/Row'
 
 import Loader from '../shared/Loader';
 
-import { columnsRollerblade, headersRlbCatalog, headingsRlbCatalog } from '../../utils/constants';
+import { columnsRlbDiary, headingsRlbDiary } from '../../utils/constants';
 
 import './styles.css'
 
-const RollerbladeMapper = () => {
+const RollerbladeMapperDiary = () => {
   const [products, setProducts] = useState([])
   const [listName, setListName] = useState([])
-
-  const [rows, setRows] = useState([]);
+	const [rows, setRows] = useState([]);
   const [pending, setPending] = useState<boolean>(true);
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
 
@@ -33,12 +32,11 @@ const RollerbladeMapper = () => {
       const reader = new FileReader()
       reader.onload = (event) => {
         const wb = read(event.target.result)
-        const sheets = wb.SheetNames;
-        if (sheets.length > 0) {
-          const rows = utils.sheet_to_json(wb.Sheets[sheets[0]], { header: headersRlbCatalog, range: 1 })
+        const sheets = wb.SheetNames
 
-          const finalProducts = addActiveStatus(rows);
-          setProducts(groupProductsList(finalProducts));
+        if (sheets.length > 0) {
+          const rows = utils.sheet_to_json(wb.Sheets[sheets[0]], {rawNumbers:false, raw:false});
+          const finalProducts = changesFields(rows);
           setListName(groupProductsList(finalProducts));
         }
       }
@@ -46,58 +44,75 @@ const RollerbladeMapper = () => {
     }
   }
 
-  const addActiveStatus = (products) => {
-    const productsList = []
+  const changesFields = (products: []) => {
+    const productsList: any[] = []
     products.map((item, index) => {
       productsList.push({
         ...item,
         id: index,
-        active: 0
+        activo: 1
       })
     })
+
     return productsList;
   }
 
-  const poductsToExport =(products) => {
-    const productsList = []
-    products.map((item, index) => {
-      console.log('%cRollerblade.tsx line:64 item', 'color: #007acc;', item);
+  type prodExport = {
+    id: string;
+    activo: string;
+    marca: string;
+    description: string;
+    pvp: string;
+    stock: String;
+  }
+
+  type pushProducts = {
+    id: string; 
+    activo: boolean; 
+    CodSuperior: string;
+    Marca: string;
+    Description: string;
+    PVP: number;
+    Stock: number;
+  }
+ 
+  const exportProducts = (products: prodExport) => {
+    const productsList: any[] = []
+    products.map((item: pushProducts, index: any) => {
+      console.log('%cRollerbladeDiary.tsx line:82 item', 'color: #007acc;', item);
       productsList.push({
-        id: index,
-        active: item.active,
-        name: item.ArtNombre,
-        pvpr: item.PVPR,
-        reference: item.VendorItemNo,
+        id: item.id,
+        activo: item.activo,
+        reference: item.CodSuperior,
         marca: item.Marca,
-        ean13: item.EAN,
-        quantity: item.Udsxpack,
-        description: item.Descripcionlarga,
-        image: item.Foto,
-        stock: item.Udsxpack
+        pvp: item.PVP,
+        stock: item.Stock
       })
     })
-    return productsList;
 
+    return productsList;
   }
 
   const groupProductsList = (products) => {
     const productsList = [];
-    const grouped = _.mapValues(_.groupBy(products, 'VendorItemNo')); 
+    const grouped = _.mapValues(_.groupBy(products, 'CodSuperior'));
+
     for (const [key, value] of Object.entries(grouped)) {
       productsList.push(value[0])
     }
     setPending(false);
-    return productsList;
+    return changesFields(productsList);
   }
 
   const handleExport = () => {
-    const headings = [headingsRlbCatalog]
+    const headings = [headingsRlbDiary]
     const wb = utils.book_new()
     const ws = utils.json_to_sheet([])
+
     utils.sheet_add_aoa(ws, headings)
-    utils.sheet_add_json(ws, poductsToExport(products), { origin: 'A2', skipHeader: true })
+    utils.sheet_add_json(ws, exportProducts(listName), { origin: 'A2', skipHeader: true })
     utils.book_append_sheet(wb, ws, 'Report')
-    writeFile(wb, 'products_Rollerblade.csv')
+    writeFile(wb, 'products_Rld_diary.csv')
   }
 
   type DataRow = {
@@ -105,6 +120,7 @@ const RollerbladeMapper = () => {
     name: string;
     brand: string;
   };
+
   // data provides access to your row data
   const ExpandedComponent: FC<ExpanderComponentProps<DataRow>> = ({ data }) => {
     const unsortedMap = Object.entries(data);
@@ -118,6 +134,8 @@ const RollerbladeMapper = () => {
     // You can set state or dispatch with something like Redux so we can use the retrieved data
     console.log('Selected Rows: ', selectedRows);
   };
+
+  console.log('%cRollerbladeDiary.tsx line:137 listName', 'color: #007acc;', listName);
   
   return (
     <>
@@ -152,7 +170,7 @@ const RollerbladeMapper = () => {
               ? (
                 <>
                   <DataTable
-                    columns={columnsRollerblade}
+                    columns={columnsRlbDiary}
                     data={listName}
                     expandableRows 
                     expandableRowsComponent={ExpandedComponent}
@@ -182,4 +200,4 @@ const RollerbladeMapper = () => {
   )
 }
 
-export default RollerbladeMapper
+export default RollerbladeMapperDiary

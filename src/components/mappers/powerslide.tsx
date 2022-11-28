@@ -124,23 +124,30 @@ const PowerSlideMapper = () => {
         <Container className="mt-4" fluid>
           <Row>
               <Col>
-                <DataTable
-                  columns={columnsPower}
-                  data={listName}
-                  expandableRows 
-                  expandableRowsComponent={ExpandedComponent}
-                  highlightOnHover={true}
-                  selectableRows
-                  onSelectedRowsChange={handleChange}
-                  pagination
-                  paginationPerPage={30}
-                  paginationRowsPerPageOptions={[30, 50, 100]}
-                  persistTableHead={true}
-                  pointerOnHover={true}
-                  striped={true}
-                  title="POWERSLIDE"
-                />
-                <ScrollToTop smooth />
+              { listName.length > 0 
+                ? (
+                  <>
+                  <DataTable
+                    columns={columnsPower}
+                    data={listName}
+                    expandableRows 
+                    expandableRowsComponent={ExpandedComponent}
+                    highlightOnHover={true}
+                    selectableRows
+                    onSelectedRowsChange={handleChange}
+                    pagination
+                    paginationPerPage={30}
+                    paginationRowsPerPageOptions={[30, 50, 100]}
+                    persistTableHead={true}
+                    pointerOnHover={true}
+                    striped={true}
+                    title="POWERSLIDE"
+                  />
+                  <ScrollToTop smooth />
+                  </>
+                ) 
+                : <span>En espera de que se carguen los datos ...</span>
+              }
               </Col>
           </Row>
         </Container>

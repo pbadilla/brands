@@ -30,6 +30,85 @@ export const headingsRollerblade = [
   'Udsxpack'
 ]
 
+export const headingsRlbDiary = [
+  'id',
+  'Activo',
+  'CodProducto',
+  'Marca',
+  'PVP',
+  'Stock'
+]
+
+export const headingsRlbCatalog = [
+  'id',
+  'Activo',
+  'Nombre',
+  'PVPR',
+  'Reference',
+  'Marca',
+  'EAN13',
+  'Quantity',
+  'Descripcion',
+  'Image',
+  'Stock'
+]
+
+export const headersRlbCatalog = [
+  "EAN",
+  "UPC",
+  "SKU",
+  "VendorItemNo",
+  "ArtCodigo",
+  "ArtNombre",
+  "ColorCodigo",
+  "ColorNombre",
+  "ColorBase",
+  "Talla",
+  "TallEUR",
+  "PVPR",
+  "Año",
+  "Marca",
+  "Familia",
+  "Linea",
+  "Tipo",
+  "Estacion",
+  "Udsxpack",
+  "CantidadMinima",
+  "EnMultiplosde",
+  "Noservirantesde",
+  "Foto",
+  "Foto2",
+  "Foto3",
+  "Foto4",
+  "Foto5",
+  "Foto6",
+  "Foto7",
+  "Foto8",
+  "Foto9",
+  "Foto10",
+  "Foto11",
+  "Foto12",
+  "Descripcionlarga",
+  "CodArancelario",
+  "FEDAS",
+  "CodPais",
+  "Actividad",
+  "Botín",
+  "Capacidad",
+  "Chasis",
+  "Composición",
+  "Construcción",
+  "Dimensiones",
+  "Freno",
+  "Guía",
+  "Perfil",
+  "Pesoaproximado",
+  "Rodamiento",
+  "RuedasPatines",
+  "Tecnología",
+  "TipoCierre"
+]
+
 export const headingsPower = [
   'Id',
   'EAN13',
@@ -412,60 +491,116 @@ export const columnsRollerblade = [
   {
     name: 'Art. Codigo',
     selector: row => row.ArtCodigo,
-    sortable: true
+    sortable: true,
+    width: '110px'
   },
   {
     name: 'Art. Nombre',
     selector: row => row.ArtNombre,
-    sortable: true
+    sortable: true,
+    maxWidth: '300px'
   },
   {
     name: 'Color Base',
     selector: row => row.ColorNombre,
-    sortable: true
+    sortable: true,
+    maxWidth: '130px'
   },
   {
     name: 'Descripcion larga',
     selector: row => row.Descripcionlarga,
-    sortable: true
+    sortable: true,
+    maxWidth: '200px'
   },
   {
     name: 'EAN',
     selector: row => row.EAN,
-    sortable: true
+    sortable: true,
+    maxWidth: '130px'
   },
   {
     name: 'Foto',
     selector: row => row.Foto,
-    sortable: true
+    sortable: true,
+    maxWidth: '130px'
   },
   {
     name: 'PVPR',
     selector: row => row.PVPR,
-    sortable: true
+    sortable: true,
+    maxWidth: '100px'
   },
   {
     name: 'SKU',
     selector: row => row.SKU,
-    sortable: true
+    sortable: true,
+    maxWidth: '130px'
   },
   {
     name: 'Talla',
     selector: row => row.Talla,
-    sortable: true
+    sortable: true,
+    maxWidth: '100px'
   },
   {
-    name: 'Uds x pack',
+    name: 'Stock',
     selector: row => row.Udsxpack,
-    sortable: true
+    sortable: true,
+    maxWidth: '50px'
   },
   {
     name: 'Active',
     selector: row => row.active,
-    sortable: true
+    sortable: true,
+    maxWidth: '50px'
   }
 ]
 
+export const columnsRlbDiary = [
+  {
+    name: 'ID',
+    selector: row => row.id,
+    sortable: true,
+    width: '80px'
+  },
+  {
+    name: 'Activo',
+    selector: row => row.activo,
+    sortable: true,
+    width: '80px'
+  },
+  {
+    name: 'PVP',
+    selector: row => row.PVP,
+    sortable: true,
+    width: '100px'
+  },
+  {
+    name: 'Código Producto',
+    selector: row => row.CodProducto,
+    sortable: true,
+    width: '150px'
+  },
+  {
+    name: 'Marca',
+    selector: row => row.Marca,
+    sortable: true,
+    width: '130px'
+  },
+  ,
+  {
+    name: 'Descripción',
+    selector: row => row.Descripcion,
+    sortable: true,
+    width: '400px'
+  },
+  {
+    name: 'Stock',
+    selector: row => row.Stock,
+    sortable: true,
+    width: '60px'
+  }
+]
 
 export const columnsPower = [
   {

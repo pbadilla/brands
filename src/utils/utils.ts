@@ -251,3 +251,25 @@ export function sizesAndColorOfProducts (allReferences: []) {
     return {allColors, allSizes, grouped, productsList};
 }
 
+
+function toFixed(num, fixed) {
+  var re = new RegExp('^-?\\d+(?:\.\\d{0,' + (fixed || -1) + '})?');
+  return num.toString().match(re)[0];
+}
+
+function transformDecimals(numToCompare:string, numToTransform:number) {
+  switch(numToCompare.length) {
+    case 5:
+      return numToTransform*0.001;
+      break;
+    case 4:
+      return numToTransform*0.01;
+      break;
+    case 3:
+    case 2:
+      return numToTransform*0.1;
+      break;
+    default:
+      break;
+  }
+}
