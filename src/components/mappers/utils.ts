@@ -33,3 +33,15 @@ const normalizeHeaders = (productsOnBrut: any[]) => {
   });
 
 }
+
+
+function extractSizes(paramArray: []) {
+  const sizes = [];
+
+  paramArray.map(item => {
+    sizes.push (item.talla)
+  })
+
+  console.log('%cRollerbladeDiary.tsx line:115 sizes', 'color: #007acc;', sizes);
+  return sizes;
+}

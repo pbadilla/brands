@@ -39,6 +39,11 @@ export const headingsRlbDiary = [
   'Stock'
 ]
 
+export const headingsRlbDiaryCombinations = [
+  'CodProducto',
+  'Talla'
+]
+
 export const headingsRlbCatalog = [
   'id',
   'Activo',

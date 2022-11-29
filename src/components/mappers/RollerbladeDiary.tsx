@@ -14,30 +14,28 @@ import Row from 'react-bootstrap/Row'
 
 import Loader from '../shared/Loader';
 
-import { columnsRlbDiary, headingsRlbDiary } from '../../utils/constants';
+import { columnsRlbDiary, headingsRlbDiary, headingsRlbDiaryCombinations } from '../../utils/constants';
 
 import './styles.css'
 
 const RollerbladeMapperDiary = () => {
-  const [products, setProducts] = useState([])
   const [listName, setListName] = useState([])
-	const [rows, setRows] = useState([]);
+  const [listProductSizes, setListProductSizes] = useState([])
   const [pending, setPending] = useState<boolean>(true);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false)
 
-  const handleImport = ($event) => {
-    const files = $event.target.files
+  const handleImport = (event: any) => {
+    const files = event.target.files
     if (files.length) {
       const file = files[0]
       const reader = new FileReader()
       reader.onload = (event) => {
-        const wb = read(event.target.result)
+        const wb = read(event?.target?.result)
         const sheets = wb.SheetNames
 
         if (sheets.length > 0) {
           const rows = utils.sheet_to_json(wb.Sheets[sheets[0]], {rawNumbers:false, raw:false});
-          const finalProducts = changesFields(rows);
-          setListName(groupProductsList(finalProducts));
+          const finalProducts = changesFields(rows as any);
+          setListName(groupProductsList(finalProducts as any));
         }
       }
       reader.readAsArrayBuffer(file)
@@ -79,7 +77,6 @@ const RollerbladeMapperDiary = () => {
   const exportProducts = (products: prodExport) => {
     const productsList: any[] = []
     products.map((item: pushProducts, index: any) => {
-      console.log('%cRollerbladeDiary.tsx line:82 item', 'color: #007acc;', item);
       productsList.push({
         id: item.id,
         activo: item.activo,
@@ -93,8 +90,43 @@ const RollerbladeMapperDiary = () => {
     return productsList;
   }
 
+  const exportSizesProducts = (products: prodExport) => {
+    const productsListSizes: any[] = []
+    console.log('%cRollerbladeDiary.tsx', 'color: #007acc;', products);
+    products.map((item: pushProducts, index: any) => {
+      productsListSizes.push({
+        id: item.id,
+        talla: item.Talla,
+        reference: item.CodSuperior,
+        color: item.Color
+      })
+    })
+
+    return productsListSizes;
+  }
+
+
+
   const groupProductsList = (products) => {
     const productsList = [];
+
+    const productsListSizes = exportSizesProducts(products);
+
+    console.log('%cRollerbladeDiary.tsx', 'color: #007acc;', productsListSizes);
+
+    const listSizes = _(productsListSizes)
+      .groupBy('reference')
+      .map(function(items, value) {
+        return {
+          codigo: value,
+          sizes: _.map(items, 'talla'),
+          color: _.map(items, 'color')
+        };
+      })
+      .value();
+
+    setListProductSizes(listSizes);
+
     const grouped = _.mapValues(_.groupBy(products, 'CodSuperior'));
 
     for (const [key, value] of Object.entries(grouped)) {
@@ -113,6 +145,19 @@ const RollerbladeMapperDiary = () => {
     utils.sheet_add_json(ws, exportProducts(listName), { origin: 'A2', skipHeader: true })
     utils.book_append_sheet(wb, ws, 'Report')
     writeFile(wb, 'products_Rld_diary.csv')
+  }
+
+  const handleExportCombinations = () => {
+    const headings = [headingsRlbDiaryCombinations]
+    const wb = utils.book_new()
+    const ws = utils.json_to_sheet([])
+    
+    console.log('%cRollerbladeDiary.tsx', 'color: #007acc;', listProductSizes);
+
+    utils.sheet_add_aoa(ws, headings)
+    utils.sheet_add_json(ws, listProductSizes, { origin: 'A2', skipHeader: true })
+    utils.book_append_sheet(wb, ws, 'Report')
+    writeFile(wb, 'products_Rld_diary_combinations.csv')
   }
 
   type DataRow = {
@@ -134,8 +179,6 @@ const RollerbladeMapperDiary = () => {
     // You can set state or dispatch with something like Redux so we can use the retrieved data
     console.log('Selected Rows: ', selectedRows);
   };
-
-  console.log('%cRollerbladeDiary.tsx line:137 listName', 'color: #007acc;', listName);
   
   return (
     <>
@@ -155,7 +198,7 @@ const RollerbladeMapperDiary = () => {
                           </Button>
                       </Col>
                       <Col>
-                          <Button type="button" variant="outline-primary" onClick={handleExport}>
+                          <Button type="button" variant="outline-primary" onClick={handleExportCombinations}>
                               Export Combinations
                           </Button>
                       </Col>
