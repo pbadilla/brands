@@ -106,7 +106,7 @@ const RollerbladeMapperDiary = () => {
 
 
   const groupProductsList = (products) => {
-    const productsList = [];
+    const productsList: Array<string> = [];
 
     const productsListSizes = exportSizesProducts(products);
 
@@ -120,25 +120,30 @@ const RollerbladeMapperDiary = () => {
       })
       .value();
 
-    const atributteSizes = (item) => {
-      console.log('%c', 'color: #007acc;', item);
+    const splitSizes: Array<string> = [];
+
+    const attributeSizes = (item) => {
       item.map((x, index) => {
-        `Talla:talla:${index}`
+        splitSizes.push(`Talla:talla:${x}`)
       })
-      
+      // `${item.sizes.join(`:0,${index}:0`)}`
+      return splitSizes;
     }
 
-    const transforToSizes = listSizes.map( (item) => {
+    // debugger;
+
+    const transformToSizes = listSizes.map( (item, index) => {
       return({
         codigo: item.codigo,
-        attribute: atributteSizes(item.sizes),
-        value: item.sizes.join(`:${index}`)
+        attribute: `Talla:talla:0`,
+        value: `${item.sizes.join(`:0,`)}:0`
       })
     });
 
-    // Name:Type:Position)
 
-    setListProductSizes(transforToSizes);
+    console.log('%c', 'color: #007acc;', transformToSizes);
+    
+    setListProductSizes(transformToSizes);
 
     const grouped = _.mapValues(_.groupBy(products, 'CodSuperior'));
 
