@@ -92,13 +92,11 @@ const RollerbladeMapperDiary = () => {
 
   const exportSizesProducts = (products: prodExport) => {
     const productsListSizes: any[] = []
-    console.log('%cRollerbladeDiary.tsx', 'color: #007acc;', products);
     products.map((item: pushProducts, index: any) => {
       productsListSizes.push({
         id: item.id,
         talla: item.Talla,
-        reference: item.CodSuperior,
-        color: item.Color
+        reference: item.CodSuperior
       })
     })
 
@@ -112,20 +110,35 @@ const RollerbladeMapperDiary = () => {
 
     const productsListSizes = exportSizesProducts(products);
 
-    console.log('%cRollerbladeDiary.tsx', 'color: #007acc;', productsListSizes);
-
     const listSizes = _(productsListSizes)
       .groupBy('reference')
       .map(function(items, value) {
         return {
           codigo: value,
-          sizes: _.map(items, 'talla'),
-          color: _.map(items, 'color')
+          sizes: _.map(items, 'talla')
         };
       })
       .value();
 
-    setListProductSizes(listSizes);
+    const atributteSizes = (item) => {
+      console.log('%c', 'color: #007acc;', item);
+      item.map((x, index) => {
+        `Talla:talla:${index}`
+      })
+      
+    }
+
+    const transforToSizes = listSizes.map( (item) => {
+      return({
+        codigo: item.codigo,
+        attribute: atributteSizes(item.sizes),
+        value: item.sizes.join(`:${index}`)
+      })
+    });
+
+    // Name:Type:Position)
+
+    setListProductSizes(transforToSizes);
 
     const grouped = _.mapValues(_.groupBy(products, 'CodSuperior'));
 
