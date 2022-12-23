@@ -192,8 +192,8 @@ const RollerbladeMapper = () => {
                     highlightOnHover={true}
                     onSelectedRowsChange={handleChange}
                     pagination
-                    paginationPerPage={30}
-                    paginationRowsPerPageOptions={[30, 50, 100]}
+                    paginationPerPage={100}
+                    paginationRowsPerPageOptions={[100, 200, 500]}
                     persistTableHead={true}
                     pointerOnHover={true}
                     progressComponent={<Loader />}

@@ -170,7 +170,8 @@ const RollerbladeMapperDiary = () => {
     utils.sheet_add_aoa(ws, headings)
     utils.sheet_add_json(ws, exportProducts(listName), { origin: 'A2', skipHeader: true })
     utils.book_append_sheet(wb, ws, 'Report')
-    writeFile(wb, 'products_rollerblade_diary.csv')
+    writeFile(wb, 'products_rollerblade_diary.csv');
+    handleExportCombinations();
   }
 
   const handleExportCombinations = () => {
@@ -218,7 +219,7 @@ const RollerbladeMapperDiary = () => {
                   <>
                       <Col>
                           <Button type="button" variant="outline-primary" onClick={handleExport}>
-                              Export Products
+                              Export Products and Combinations
                           </Button>
                       </Col>
                       <Col>
@@ -244,8 +245,8 @@ const RollerbladeMapperDiary = () => {
                     highlightOnHover={true}
                     onSelectedRowsChange={handleChange}
                     pagination
-                    paginationPerPage={30}
-                    paginationRowsPerPageOptions={[30, 50, 100]}
+                    paginationPerPage={100}
+                    paginationRowsPerPageOptions={[100, 200, 500]}
                     persistTableHead={true}
                     pointerOnHover={true}
                     progressComponent={<Loader />}

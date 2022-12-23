@@ -10,7 +10,7 @@ import Container from 'react-bootstrap/Container'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 
-import { columnsSeba, headingsSeba, headingsSebaCombinations } from '../../utils/constants';
+import { columnsSeba, headingsSebaDiary, headingsSebaCombinations } from '../../utils/constants';
 import { sizesAndColorOfProducts } from '../../utils/utils';
 
 import './styles.css'
@@ -41,13 +41,16 @@ const SebaMapper = () => {
   }
 
   const handleExport = () => {
-    const headings = [headingsSeba]
-    const wb = utils.book_new()
-    const ws = utils.json_to_sheet([])
-    utils.sheet_add_aoa(ws, headings)
-    utils.sheet_add_json(ws, products, { origin: 'A2', skipHeader: true })
-    utils.book_append_sheet(wb, ws, 'Report')
-    writeFile(wb, 'products_seba_diary.csv')
+    const headings = [headingsSebaDiary];
+    const wb = utils.book_new();
+    const ws = utils.json_to_sheet([]);
+    utils.sheet_add_aoa(ws, headings);
+    utils.sheet_add_json(ws, products, { origin: 'A2', skipHeader: true });
+    console.log('%c > headings', 'color: #007acc;', headings);
+    console.log('%c > products', 'color: #007acc;', products);
+    utils.book_append_sheet(wb, ws, 'Report');
+    writeFile(wb, 'products_seba_diary.csv');
+    handleExportCombinations();
   }
 
   const handleExportCombinations = () => {
@@ -126,7 +129,7 @@ const SebaMapper = () => {
                   <>
                       <Col>
                           <Button type="button" variant="outline-primary" onClick={handleExport}>
-                              Export Products
+                              Export Products and Combinations
                           </Button>
                       </Col>
                       <Col>
@@ -143,7 +146,7 @@ const SebaMapper = () => {
               <Col>
               { listName.length > 0 
                 ? (
-                  <>
+                  <>;
                     <DataTable
                       columns={columnsSeba}
                       data={listName}
@@ -153,8 +156,8 @@ const SebaMapper = () => {
                       selectableRows
                       onSelectedRowsChange={handleChange}
                       pagination
-                      paginationPerPage={30}
-                      paginationRowsPerPageOptions={[30, 50, 100]}
+                      paginationPerPage={100}
+                      paginationRowsPerPageOptions={[100, 200, 500]}
                       persistTableHead={true}
                       pointerOnHover={true}
                       striped={true}

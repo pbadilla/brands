@@ -1,4 +1,6 @@
-export const headingsSeba = [
+import { Link } from 'react-router-dom';
+
+export const headingsSebaDiary = [
   'id',
   'Activo',
   'Nombre',
@@ -7,10 +9,8 @@ export const headingsSeba = [
   'Referencia',
   'Marca',
   'EAN13',
-  'Plazo de entrega',
   'Cantidad',
   'Descripcion',
-  'SKU',
   'Imagen',
   'MetaTitle',
   'MetaKeyWords',
@@ -156,7 +156,8 @@ export const headingsShop = [
   'STOCK', 
   'ACTIVO',
   'REFERENCIA',
-  'DELETEIMAGES'
+  'DELETEIMAGES',
+  'ESTADO'
 ]
 
 export const headersTable = [
@@ -464,47 +465,56 @@ export const columnsSeba = [
   {
     name: 'ID',
     selector: row => row.id,
-    sortable: true
+    sortable: true,
+    width: '80px'
   },
   {
     name: 'Nº Referencia',
     selector: row => row.referencia,
-    sortable: true
+    sortable: true,
+    width: '150px'
   },
   {
     name: 'ean13',
     selector: row => row.ean13,
-    sortable: true
+    sortable: true,
+    width: '150px'
   },
   {
     name: 'Nombre',
     selector: row => row.nombre,
-    sortable: true
+    sortable: true,
+    width: '200px'
   },
   {
     name: 'Descripción',
     selector: row => row.description,
-    sortable: true
+    sortable: true,
+    width: '200px'
   },
   {
     name: 'PVPR',
     selector: row => row.pvpr,
-    sortable: true
+    sortable: true,
+    width: '80px'
   },
   {
     name: 'Stock',
     selector: row => row.quantity,
-    sortable: true
+    sortable: true,
+    width: '80px'
   },
   {
     name: 'Marca',
     selector: row => row.marca,
-    sortable: true
+    sortable: true,
+    width: '100px'
   },
   {
     name: 'Active',
     selector: row => row.active,
-    sortable: true
+    sortable: true,
+    width: '100px'
   }
 ]
 
@@ -685,46 +695,59 @@ export const columnsShop = [
   {
     name: 'ID',
     selector: row => row.id,
-    sortable: true
+    sortable: true,
+    width: '65px'
   },
   {
     name: 'URL',
-    selector: row => row.url,
-    sortable: true
+    // cell: ({ row }) => (<Link to={{ pathname: `${row.url}` }}>{row.url}</Link>),0>
+    cell: row => row.url,
+    ignoreRowClick: true,
+    allowOverflow: true,
+    width: "200px",
+    button: true,
+    headerStyle: {textAlign: 'left'}
   },
   {
     name: 'nombre',
     selector: row => row.nombre,
-    sortable: true
+    sortable: true,
+    width: '200px'
   },
   {
     name: 'categorias',
     selector: row => row.categoria,
-    sortable: true
+    sortable: true,
+    width: '100px'
   },
   {
     name: 'precio',
     selector: row => row.precio,
-    sortable: true
+    sortable: true,
+    width: '100px'
   },
   {
     name: 'cantidad',
     selector: row => row.cantidad,
-    sortable: true
+    sortable: true,
+    width: '100px'
   },
   {
     name: 'activo',
     selector: row => row.activo,
-    sortable: true
+    sortable: true,
+    width: 'º00px'
   },
   {
     name: 'referencia',
     selector: row => row.reference,
-    sortable: true
+    sortable: true,
+    width: '200px'
   },
   {
     name: 'delete',
     selector: row => row.deleteImages,
-    sortable: true
+    sortable: true,
+    width: '100px'
   }
 ]

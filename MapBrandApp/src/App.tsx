@@ -3,6 +3,7 @@ import PowerSlideMapper from './components/mappers/powerslide'
 import RollerbladeMapper from './components/mappers/Rollerblade'
 import RollerbladeMapperDiary from './components/mappers/RollerbladeDiary'
 import SebaMapper from './components/mappers/Seba'
+import ShopMapper from './components/mappers/Shop';
 
 import Intro from './components/pages/Intro'
 
@@ -41,6 +42,9 @@ function App () {
             </Tab>
             <Tab eventKey="powerslide" title="POWERSLIDE">
               <PowerSlideMapper />
+            </Tab>
+            <Tab eventKey="shop" title="Solo Tienda">
+              <ShopMapper />
             </Tab>
             <Tab eventKey="tienda" title="Stock Tienda">
               <OtherMapper />

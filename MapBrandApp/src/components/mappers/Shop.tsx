@@ -18,7 +18,7 @@ import { columnsShop, headingsShop } from '../../utils/constants';
 
 import './styles.css'
 
-const OtherMapper = () => {
+const ShopMapper = () => {
   const [products, setProducts] = useState([])
   const [listName, setListName] = useState([])
   const [pending, setPending] = useState<boolean>(true);
@@ -35,9 +35,8 @@ const OtherMapper = () => {
 
         if (sheets.length > 0) {
           const rows = utils.sheet_to_json(wb.Sheets[sheets[0]])
-          const finalProducts = addReference(rows);
-          setListName(finalProducts);
-          setProducts(finalProducts);
+          setListName(addReference(rows));
+
         }
       }
       reader.readAsArrayBuffer(file)
@@ -55,8 +54,7 @@ const OtherMapper = () => {
         precio:item['Precio (imp. incl.)'],
         cantidad: item.Cantidad,
         activo: !item.Estado,
-        reference: item.Referencia || `rg360-${index}`,
-        deleteImages: 1,
+        reference: item.Referencia,
         condition: 'new'
       })
     });
@@ -69,9 +67,9 @@ const OtherMapper = () => {
     const wb = utils.book_new()
     const ws = utils.json_to_sheet([])
     utils.sheet_add_aoa(ws, headings)
-    utils.sheet_add_json(ws, products, { origin: 'A2', skipHeader: true })
+    utils.sheet_add_json(ws, productsList, { origin: 'A2', skipHeader: true })
     utils.book_append_sheet(wb, ws, 'Report')
-    writeFile(wb, 'products_shop.csv')
+    writeFile(wb, 'products_rg360.csv')
   }
 
   type DataRow = {
@@ -92,6 +90,8 @@ const OtherMapper = () => {
     // You can set state or dispatch with something like Redux so we can use the retrieved data
     console.log('Selected Rows: ', selectedRows);
   };
+
+  console.log('%c listName', 'color: #007acc;', listName);
   
   return (
     <>
@@ -156,4 +156,4 @@ const OtherMapper = () => {
   )
 }
 
-export default OtherMapper
+export default ShopMapper;
