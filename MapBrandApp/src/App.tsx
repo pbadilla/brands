@@ -4,6 +4,7 @@ import RollerbladeMapper from './components/mappers/Rollerblade'
 import RollerbladeMapperDiary from './components/mappers/RollerbladeDiary'
 import SebaMapper from './components/mappers/Seba'
 import ShopMapper from './components/mappers/Shop';
+import StepsDemo from './components/steps/steps';
 
 import Intro from './components/pages/Intro'
 
@@ -48,6 +49,9 @@ function App () {
             </Tab>
             <Tab eventKey="tienda" title="Stock Tienda">
               <OtherMapper />
+            </Tab>
+            <Tab eventKey="steps" title="Steps">
+              <StepsDemo />
             </Tab>
           </Tabs>
         </Col>

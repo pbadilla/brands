@@ -523,7 +523,7 @@ export function sizesAndColorOfProducts (allReferences: []) {
         allSizes.push(extractCSizes(compareString as string)); 
 
         products.push ({
-          id: index,
+          id: index+293,
           active: 1,
           nombre: deleteSizes(item?.nom),
           categories: extractCategories(item.refmere),
@@ -536,7 +536,8 @@ export function sizesAndColorOfProducts (allReferences: []) {
           imagen: item?.image,
           metaTitle: deleteSizes(item?.nom),
           metaKeywords: extractCategories(item.refmere),
-          metaDescription: deleteSizes(item?.nom)
+          metaDescription: deleteSizes(item?.nom),
+          deleteAllImages: 1
         })
       }
     });

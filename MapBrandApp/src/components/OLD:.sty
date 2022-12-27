@@ -1,0 +1,24 @@
+OLD:
+{category:/}{id}{-:id_product_attribute}-{rewrite}{-:ean13}.html
+{category:/}{id}-{rewrite}
+supplier/{id}-{rewrite}
+brand/{id}-{rewrite}
+content/{id}-{rewrite}
+content/category/{id}-{rewrite}
+module/{module}{/:controller}
+
+NEW:
+
+
+{category:/}{rewrite}-{id}{-:id_product_attribute}.html
+{category:/}{rewrite}_{id}/
+supplier/{rewrite}_{id}/
+brand/{rewrite}_{id}/
+content/{rewrite}_{id}/
+module/{module}{/:controller}
+
+
+
+Palabra clave "{module}" requerida para ruta "module" (regla: "content/category/{rewrite}_{id}/")
+Palabra clave "{controller}" requerida para ruta "module" (regla: "content/category/{rewrite}_{id}/")
+Palabra clave "{id_product_attribute}" requerida para ruta "product_rule" (regla: "{category:/}{rewrite}-{id}

@@ -36,7 +36,7 @@ const ShopMapper = () => {
         if (sheets.length > 0) {
           const rows = utils.sheet_to_json(wb.Sheets[sheets[0]])
           setListName(addReference(rows));
-
+          setProducts(addReference(rows));
         }
       }
       reader.readAsArrayBuffer(file)
@@ -47,7 +47,7 @@ const ShopMapper = () => {
     const productsList: any[] = []
     products.map((item, index) => {
       productsList.push({
-        id: item['Product ID'],
+        id: index,
         url: item.Imagen,
         nombre: item.Nombre,
         categoria: item['CategorÃ­a'],
@@ -67,7 +67,7 @@ const ShopMapper = () => {
     const wb = utils.book_new()
     const ws = utils.json_to_sheet([])
     utils.sheet_add_aoa(ws, headings)
-    utils.sheet_add_json(ws, productsList, { origin: 'A2', skipHeader: true })
+    utils.sheet_add_json(ws, products, { origin: 'A2', skipHeader: true })
     utils.book_append_sheet(wb, ws, 'Report')
     writeFile(wb, 'products_rg360.csv')
   }
@@ -91,7 +91,7 @@ const ShopMapper = () => {
     console.log('Selected Rows: ', selectedRows);
   };
 
-  console.log('%c listName', 'color: #007acc;', listName);
+  // console.log('%c listName', 'color: #007acc;', listName);
   
   return (
     <>

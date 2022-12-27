@@ -46,8 +46,6 @@ const SebaMapper = () => {
     const ws = utils.json_to_sheet([]);
     utils.sheet_add_aoa(ws, headings);
     utils.sheet_add_json(ws, products, { origin: 'A2', skipHeader: true });
-    console.log('%c > headings', 'color: #007acc;', headings);
-    console.log('%c > products', 'color: #007acc;', products);
     utils.book_append_sheet(wb, ws, 'Report');
     writeFile(wb, 'products_seba_diary.csv');
     handleExportCombinations();

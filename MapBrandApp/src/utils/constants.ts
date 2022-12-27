@@ -41,8 +41,8 @@ export const headingsRlbCatalog = [
   'Plazo de entrega',
   'Cantidad',
   'Descripcion',
-  'SKU',
   'Imagen',
+  'DeleteImages',
   'MetaTitle',
   'MetaKeyWords',
   'MetaDescription'
@@ -63,7 +63,6 @@ export const headingsRollerblade = [
 ]
 
 export const headingsRlbDiary = [
-  'id',
   'Activo',
   'CodProducto',
   'Marca',
@@ -149,14 +148,13 @@ export const headingsPower = [
 
 export const headingsShop = [
   'ID',
-  'URL',
+  'IMAGEN',
   'NOMBRE ',
   'CATEGORIA',
   'PVPR',
   'STOCK', 
   'ACTIVO',
   'REFERENCIA',
-  'DELETEIMAGES',
   'ESTADO'
 ]
 
@@ -589,16 +587,10 @@ export const columnsRollerblade = [
 
 export const columnsRlbDiary = [
   {
-    name: 'ID',
-    selector: row => row.id,
-    sortable: true,
-    width: '80px'
-  },
-  {
     name: 'Activo',
     selector: row => row.activo,
     sortable: true,
-    width: '80px'
+    width: '100px'
   },
   {
     name: 'PVP',
@@ -629,7 +621,7 @@ export const columnsRlbDiary = [
     name: 'Stock',
     selector: row => row.Stock,
     sortable: true,
-    width: '60px'
+    width: '100px'
   }
 ]
 
@@ -693,18 +685,18 @@ export const columnsPower = [
 
 export const columnsShop = [
   {
-    name: 'ID',
+    name: 'id',
     selector: row => row.id,
-    sortable: true,
-    width: '65px'
+    sortable: false,
+    width: '50px'
   },
   {
-    name: 'URL',
+    name: 'imagen',
     // cell: ({ row }) => (<Link to={{ pathname: `${row.url}` }}>{row.url}</Link>),0>
     cell: row => row.url,
     ignoreRowClick: true,
     allowOverflow: true,
-    width: "200px",
+    width: "300px",
     button: true,
     headerStyle: {textAlign: 'left'}
   },
@@ -712,7 +704,7 @@ export const columnsShop = [
     name: 'nombre',
     selector: row => row.nombre,
     sortable: true,
-    width: '200px'
+    width: '350px'
   },
   {
     name: 'categorias',
@@ -734,20 +726,20 @@ export const columnsShop = [
   },
   {
     name: 'activo',
-    selector: row => row.activo,
+    selector: row => row.activo.toString(),
     sortable: true,
-    width: 'º00px'
+    width: '100px'
   },
   {
     name: 'referencia',
     selector: row => row.reference,
     sortable: true,
-    width: '200px'
+    width: '120px'
   },
   {
-    name: 'delete',
-    selector: row => row.deleteImages,
+    name: 'condicion',
+    selector: row => row.condition,
     sortable: true,
-    width: '100px'
+    width: '80px'
   }
 ]

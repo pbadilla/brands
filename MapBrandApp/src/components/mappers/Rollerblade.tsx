@@ -51,8 +51,7 @@ const RollerbladeMapper = () => {
     products.map((item, index) => {
       productsList.push({
         ...item,
-        id: index,
-        active: 0
+        id: index
       })
     })
     return productsList;
@@ -93,12 +92,12 @@ const RollerbladeMapper = () => {
     };
   }
 
-  const poductsToExport =(products) => {
+  const productsToExport =(products) => {
     const productsList = [];
     products.map((item, index: number) => {
       productsList.push({
-        id: index,
-        activo: item.active,
+        id: index+78,
+        activo: 0,
         nombre: item.ArtNombre,
         categorias: changeFamily(item.Familia),
         pvpr: item.PVPR,
@@ -108,8 +107,8 @@ const RollerbladeMapper = () => {
         plazoEntrega: '2-4 dias',
         cantidad: item.Udsxpack,
         descricion: item.Descripcionlarga,
-        sku: item.SKU,
         imagen: item.Foto,
+        deleteImages: 1,
         metaTitulo: item.ArtNombre,
         metaKeywords: changeFamily(item.Familia),  
         metaDescripcion: truncateString(item.Descripcionlarga, 450)
@@ -133,7 +132,7 @@ const RollerbladeMapper = () => {
     const wb = utils.book_new()
     const ws = utils.json_to_sheet([])
     utils.sheet_add_aoa(ws, headings)
-    utils.sheet_add_json(ws, poductsToExport(products), { origin: 'A2', skipHeader: true })
+    utils.sheet_add_json(ws, productsToExport(products), { origin: 'A2', skipHeader: true })
     utils.book_append_sheet(wb, ws, 'Report')
     writeFile(wb, 'products_rollerblade.csv')
   }

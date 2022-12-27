@@ -103,7 +103,6 @@ const RollerbladeMapperDiary = () => {
     const productsListSizes: any[] = []
     products.map((item: pushProducts, index: any) => {
       productsListSizes.push({
-        id: item.id,
         talla: item.Talla,
         reference: item.CodSuperior,
         stock: parseInt(item.Stock)
