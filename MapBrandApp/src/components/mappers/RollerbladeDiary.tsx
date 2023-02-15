@@ -260,10 +260,15 @@ const RollerbladeMapperDiary = () => {
               ) 
               : (
                 <>
+                  <p>Datos del FTP</p>
                   <p>Datos contenidos en el fichero CSV: <strong>rollergrind360_bm.csv</strong></p>
-                  <ul>
-                    <li><p>Fichero que se envía diariamente desde BMSportech</p></li>
-                  </ul>
+                    <ul>
+                      <li>
+                        <span>url : <a href="https://ftp.bmsportech.com">Enlace</a></span>
+                      </li>
+                      <li><span>User:</span> <strong>cliente_rollergrind360</strong></li>
+                      <li><span>Password:</span> <strong>aue9kpr@DPV.hgp7ufz</strong></li>
+                    </ul>
                 </>
               )}
               </Col>

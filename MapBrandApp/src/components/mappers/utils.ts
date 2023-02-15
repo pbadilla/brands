@@ -27,7 +27,6 @@ const normalizeHeaders = (productsOnBrut: any[]) => {
   let productTemp = ""
   for (const [key, value] of Object.entries(item)) {
     const tempItem = `${transformKey(key)}: ${value}`;
-    console.log('%ctempItem', 'color: #007acc;', tempItem);
     productTemp +=tempItem;
   }
   });
