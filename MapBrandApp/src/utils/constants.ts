@@ -63,17 +63,19 @@ export const headingsRollerblade = [
 ]
 
 export const headingsRlbDiary = [
+  'Id',
   'Activo',
-  'CodProducto',
+  'Referencia',
   'Marca',
-  'PVP',
-  'Stock'
+  'Precio Impuestos incluidos',
+  'Cantidad'
 ]
 
 export const headingsRlbDiaryCombinations = [
   'codigo',
   'attribute',
-  'value'
+  'value',
+  'cantidad'
 ]
 
 export const headersRlbCatalog = [

@@ -37,7 +37,7 @@ const PowerSlideMapper = () => {
     }
   }
 
-  const groupProductsList = (products) => {
+  const groupProductsList = (products: any[]) => {
     const productsList = [];
     const grouped = _.mapValues(_.groupBy(products, 'Artikelnr')); 
     for (const [key, value] of Object.entries(grouped)) {
@@ -73,6 +73,7 @@ const PowerSlideMapper = () => {
     utils.sheet_add_aoa(ws, headings)
     utils.sheet_add_json(ws, products, { origin: 'A2', skipHeader: true })
     utils.book_append_sheet(wb, ws, 'Report')
+    utils.sheet_to_csv(ws, { FS: ";"})
     writeFile(wb, 'products_Powerslide.csv')
   }
 
@@ -81,6 +82,7 @@ const PowerSlideMapper = () => {
     name: string;
     brand: string;
   };
+
   // data provides access to your row data
   const ExpandedComponent: FC<ExpanderComponentProps<DataRow>> = ({ data }) => {
     const unsortedMap = Object.entries(data);

@@ -1,5 +1,7 @@
 import React, { FC, useState, useEffect } from 'react'
 
+import CsvDownloadButton from 'react-json-to-csv'
+
 import { read, utils, writeFile } from 'xlsx'
 import ScrollToTop from 'react-scroll-to-top'
 import DataTable, { ExpanderComponentProps } from 'react-data-table-component';
@@ -47,6 +49,7 @@ const SebaMapper = () => {
     utils.sheet_add_aoa(ws, headings);
     utils.sheet_add_json(ws, products, { origin: 'A2', skipHeader: true });
     utils.book_append_sheet(wb, ws, 'Report');
+    utils.sheet_to_csv(ws, { FS: ";"})
     writeFile(wb, 'products_seba_diary.csv');
     handleExportCombinations();
   }
@@ -58,6 +61,7 @@ const SebaMapper = () => {
     utils.sheet_add_aoa(ws, headings)
     utils.sheet_add_json(ws, productsForCombinations, { origin: 'A2', skipHeader: true })
     utils.book_append_sheet(wb, ws, 'Report')
+    utils.sheet_to_csv(ws, { FS: ";"})
     writeFile(wb, 'products_seba_diary_combinations.csv')
   }
 
@@ -125,15 +129,46 @@ const SebaMapper = () => {
               </Col>
               { listName.length > 0 &&
                   <>
-                      <Col>
-                          <Button type="button" variant="outline-primary" onClick={handleExport}>
-                              Export Products and Combinations
-                          </Button>
+<Col>
+                      <label>
+                        Export Products: 
+                        <CsvDownloadButton style={{ //pass other props, like styles
+                          boxShadow:"inset 0px 1px 0px 0px #e184f3",
+                          background:"linear-gradient(to bottom, #c123de 5%, #a20dbd 100%)",
+                          backgroundColor:"#c123de",
+                          borderRadius:"6px",
+                          border:"1px solid #a511c0",
+                          display:"inline-block",
+                          cursor:"pointer","color":"#ffffff",
+                          fontSize:"15px",
+                          fontWeight:"bold",
+                          padding:"6px 24px",
+                          textDecoration:"none",
+                          textShadow:"0px 1px 0px #9b14b3"
+                          }}
+                          data={products} filename="seba_products.csv" delimiter=";" />
+                      </label>
                       </Col>
                       <Col>
-                          <Button type="button" variant="outline-primary" onClick={handleExportCombinations}>
-                              Export Combinations
-                          </Button>
+
+                       <label>
+                        Export Products: 
+                        <CsvDownloadButton style={{ //pass other props, like styles
+                          boxShadow:"inset 0px 1px 0px 0px #e184f3",
+                          background:"linear-gradient(to bottom, #c123de 5%, #a20dbd 100%)",
+                          backgroundColor:"#c123de",
+                          borderRadius:"6px",
+                          border:"1px solid #a511c0",
+                          display:"inline-block",
+                          cursor:"pointer","color":"#ffffff",
+                          fontSize:"15px",
+                          fontWeight:"bold",
+                          padding:"6px 24px",
+                          textDecoration:"none",
+                          textShadow:"0px 1px 0px #9b14b3"
+                          }}
+                          data={productsForCombinations} filename="seba_products_combinations.csv" delimiter=";" />
+                      </label>
                       </Col>
                   </>
               }

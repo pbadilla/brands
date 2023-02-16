@@ -1,5 +1,7 @@
 import React, { FC, useState, useEffect } from 'react'
 
+import CsvDownloadButton from 'react-json-to-csv'
+
 import { read, utils, writeFile } from 'xlsx'
 import groupBy from 'lodash.groupby'
 import _, { constant } from 'lodash'
@@ -169,7 +171,10 @@ const RollerbladeMapperDiary = () => {
     utils.sheet_add_aoa(ws, headings)
     utils.sheet_add_json(ws, exportProducts(listName), { origin: 'A2', skipHeader: true })
     utils.book_append_sheet(wb, ws, 'Report')
-    writeFile(wb, 'products_rollerblade_diary.csv');
+    utils.sheet_to_csv(wb, { FS: ";"})
+    return ws;
+
+    // writeFile(wb, 'products_rollerblade_diary.csv');
     handleExportCombinations();
   }
 
@@ -181,7 +186,10 @@ const RollerbladeMapperDiary = () => {
     utils.sheet_add_aoa(ws, headings)
     utils.sheet_add_json(ws, listProductSizes, { origin: 'A2', skipHeader: true })
     utils.book_append_sheet(wb, ws, 'Report')
+    utils.sheet_to_csv(wb, { FS: ";"})
     writeFile(wb, 'products_rollerblade_diary_combinations.csv')
+
+    // return ws;
   }
 
   type DataRow = {
@@ -217,14 +225,50 @@ const RollerbladeMapperDiary = () => {
               { listName.length > 0 &&
                   <>
                       <Col>
-                          <Button type="button" variant="outline-primary" onClick={handleExport}>
+                      <label>
+                        Export Products: 
+                        <CsvDownloadButton style={{ //pass other props, like styles
+                          boxShadow:"inset 0px 1px 0px 0px #e184f3",
+                          background:"linear-gradient(to bottom, #c123de 5%, #a20dbd 100%)",
+                          backgroundColor:"#c123de",
+                          borderRadius:"6px",
+                          border:"1px solid #a511c0",
+                          display:"inline-block",
+                          cursor:"pointer","color":"#ffffff",
+                          fontSize:"15px",
+                          fontWeight:"bold",
+                          padding:"6px 24px",
+                          textDecoration:"none",
+                          textShadow:"0px 1px 0px #9b14b3"
+                          }}
+                      data={listName} filename="rollerblade_products.csv" delimiter=";" />
+                      </label>
+                          {/* <Button type="button" variant="outline-primary" onClick={handleExport}>
                               Export Products and Combinations
-                          </Button>
+                          </Button> */}
                       </Col>
                       <Col>
-                          <Button type="button" variant="outline-primary" onClick={handleExportCombinations}>
+                          {/* <Button type="button" variant="" onClick={handleExportCombinations}>
                               Export Combinations
-                          </Button>
+                          </Button> */}
+                       <label>
+                        Export Products: 
+                        <CsvDownloadButton style={{ //pass other props, like styles
+                          boxShadow:"inset 0px 1px 0px 0px #e184f3",
+                          background:"linear-gradient(to bottom, #c123de 5%, #a20dbd 100%)",
+                          backgroundColor:"#c123de",
+                          borderRadius:"6px",
+                          border:"1px solid #a511c0",
+                          display:"inline-block",
+                          cursor:"pointer","color":"#ffffff",
+                          fontSize:"15px",
+                          fontWeight:"bold",
+                          padding:"6px 24px",
+                          textDecoration:"none",
+                          textShadow:"0px 1px 0px #9b14b3"
+                          }}
+                          data={listProductSizes} filename="rollerblade_products_combinations.csv" delimiter=";" />
+                      </label>
                       </Col>
                   </>
               }
@@ -264,7 +308,7 @@ const RollerbladeMapperDiary = () => {
                   <p>Datos contenidos en el fichero CSV: <strong>rollergrind360_bm.csv</strong></p>
                     <ul>
                       <li>
-                        <span>url : <a href="https://ftp.bmsportech.com">Enlace</a></span>
+                        <span>url : <a href="ftp://ftp.bmsportech.com/rollergrind360_bm.csv">Enlace</a></span>
                       </li>
                       <li><span>User:</span> <strong>cliente_rollergrind360</strong></li>
                       <li><span>Password:</span> <strong>aue9kpr@DPV.hgp7ufz</strong></li>

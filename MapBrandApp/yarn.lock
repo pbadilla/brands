@@ -853,6 +853,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-json-to-csv@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@types/react-json-to-csv/-/react-json-to-csv-1.2.0.tgz#2be16ba3e6aa4924338f7f79c1f611e779759d58"
+  integrity sha512-iGazKICsWbaquboJUap3UBFqohq7sz4SzKE3H6KAqj2oXZV11Ex0yMwuaK3pglZhUoUcO54y9h64TuqFCcBX+g==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-table@^7.7.12":
   version "7.7.12"
   resolved "https://registry.yarnpkg.com/@types/react-table/-/react-table-7.7.12.tgz#628011d3cb695b07c678704a61f2f1d5b8e567fd"
@@ -2624,6 +2631,11 @@ json-stable-stringify-without-jsonify@^1.0.1:
   resolved "https://registry.yarnpkg.com/json-stable-stringify-without-jsonify/-/json-stable-stringify-without-jsonify-1.0.1.tgz#9db7b59496ad3f3cfef30a75142d2d930ad72651"
   integrity sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw==
 
+json-to-csv-export@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/json-to-csv-export/-/json-to-csv-export-2.1.0.tgz#9d0dd47582ac4b7b75f07bea758b76a7546c63ac"
+  integrity sha512-xAkBf6f0uLqG7gtCuulqp6BtbIswYMiSTCJ2ctuh2w1W5XvQKywX4Ppkr5Tgm3JUHLgeOspli8zA9Hy494X5WA==
+
 json5@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/json5/-/json5-1.0.1.tgz#779fb0018604fa854eacbf6252180d83543e3dbe"
@@ -3144,6 +3156,13 @@ react-is@^18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
+
+react-json-to-csv@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-json-to-csv/-/react-json-to-csv-1.2.0.tgz#b19a8448843bc84faba7ed05445d89a9abecf9b4"
+  integrity sha512-4yBorgPrkRQDRpbTKDq5vXIb4+CYBorwFxbYyKddmTnFlUGQb/2EOyIrSq6Elp/ygYCVKJK2IwfhEYUaDVyCpw==
+  dependencies:
+    json-to-csv-export "2.1.0"
 
 react-lifecycles-compat@^3.0.4:
   version "3.0.4"
