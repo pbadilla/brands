@@ -13,7 +13,7 @@ import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 
 import { columnsSeba, headingsSebaDiary, headingsSebaCombinations } from '../../utils/constants';
-import { sizesAndColorOfProducts } from '../../utils/utils';
+import { checkIfImageExists, sizesAndColorOfProducts } from '../../utils/utils';
 
 import './styles.css'
 
@@ -65,6 +65,9 @@ const SebaMapper = () => {
     writeFile(wb, 'products_seba_diary_combinations.csv')
   }
 
+
+
+
   const normalizeReference = (reference:string) => {
     if(reference && reference.slice(-1) === "-" ) {
       return reference.slice(0, -1)
@@ -80,6 +83,7 @@ const SebaMapper = () => {
     products.map((item, index:number) => {
       if (item.stock !== 0) {
         const originReference = normalizeReference(item?.refmere);
+
         productList.push({
           ...item,
           refmere: originReference

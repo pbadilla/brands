@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { read, utils, writeFile } from 'xlsx';
-import { columnsRollerblade, headersRlbCatalog, headingsRlbCatalog } from '../../utils/constants';
+import { columnsRollerblade, headersRlbCatalog, headingsRlbCatalog } from '../../../utils/constants';
 
 import groupBy from 'lodash.groupby';
 import _, { constant } from 'lodash';

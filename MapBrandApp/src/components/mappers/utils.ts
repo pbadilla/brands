@@ -41,6 +41,7 @@ function extractSizes(paramArray: []) {
     sizes.push (item.talla)
   })
 
-  console.log('%cRollerbladeDiary.tsx line:115 sizes', 'color: #007acc;', sizes);
   return sizes;
 }
+
+
