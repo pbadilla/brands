@@ -1,5 +1,7 @@
 import React, { FC, useState, useEffect } from 'react'
 
+import Papa from "papaparse";
+
 import { read, utils, writeFile } from 'xlsx'
 import groupBy from 'lodash.groupby'
 import _, { constant } from 'lodash'
@@ -93,6 +95,7 @@ const RollerbladeMapper = () => {
     };
   }
 
+
 const fotoIsValid = (photos: []) => {
 
   const existPhotos = photos.filter(item => item);
@@ -130,7 +133,6 @@ const fotoIsValid = (photos: []) => {
         metaDescription: truncateString(item.FEDAS, 500)
       })
     })
-    console.log('%cproductsList', 'color: #007acc;', productsList);
     return productsList;
   }
 
@@ -172,24 +174,33 @@ const fotoIsValid = (photos: []) => {
     // You can set state or dispatch with something like Redux so we can use the retrieved data
     console.log('Selected Rows: ', selectedRows);
   };
+
+  async function handleImportCSV() {
+    const res = await fetch('../../../assets/json/rb_products.json')
+    const data = await res.json()
+    console.log('%crbProductsFromJson', 'color: #007acc;', data);
+    setProducts(groupProductsList(data));
+    setListName(groupProductsList(data));
+  }
   
   return (
     <>
       <Container fluid>
           <Row>
-              <Col className="centerRow">
-                  <Form.Group controlId="formFile" className="mb-3">
-                      <Form.Label>Cargar CSV</Form.Label>
-                      <Form.Control type="file" required onChange={handleImport} accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
-                  </Form.Group>
+              <Col> 
+                <p>Datos extraídos del servidor FTPS de BMSportech: <strong>stocks.csv</strong></p>
+                <ul>
+                  <li><p>Fichero de todo el catálogo de productos diarios de Rollerblade</p></li>
+                </ul>                       
+                <Button type="button" variant="outline-primary" onClick={handleImportCSV}>
+                      Importar Datos Diarios
+                </Button>
               </Col>
               { listName.length > 0 &&
                   <>
                       <Col>
-                          {/* <Button type="button" variant="outline-primary" onClick={handleExport}>
-                              Export Catalog Products
-                          </Button> */}
-                           <label>
+
+                        <label>
                         Export Products: 
                         <CsvDownloadButton style={{ //pass other props, like styles
                           boxShadow:"inset 0px 1px 0px 0px #e184f3",
@@ -241,10 +252,7 @@ const fotoIsValid = (photos: []) => {
               ) 
               :(
                 <>
-                  <p>Datos contenidos en el fichero: <strong>pricat_rollerblade_20221110.xlsx</strong></p>
-                  <ul>
-                    <li><p>Fichero de todo el catálogo de productos anuales de Rollerblade</p></li>
-                  </ul>
+                  <p>Esperando cargar los datos</p>
                 </>
               )}
               </Col>

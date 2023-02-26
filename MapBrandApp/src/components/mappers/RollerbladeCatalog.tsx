@@ -169,8 +169,6 @@ const RollerbladeCatalog = () => {
   const groupProductsList = (products) => {
     const productsList: Array<string> = [];
 
-    console.log('%cproductsList', 'color: #007acc;', productsList);
-
     const productsListSizes = exportSizesProducts(products);
 
     const listSizes = _(productsListSizes)

@@ -42,17 +42,17 @@ const SebaMapper = () => {
     }
   }
 
-  const handleExport = () => {
-    const headings = [headingsSebaDiary];
-    const wb = utils.book_new();
-    const ws = utils.json_to_sheet([]);
-    utils.sheet_add_aoa(ws, headings);
-    utils.sheet_add_json(ws, products, { origin: 'A2', skipHeader: true });
-    utils.book_append_sheet(wb, ws, 'Report');
-    utils.sheet_to_csv(ws, { FS: ";"})
-    writeFile(wb, 'products_seba_diary.csv');
-    handleExportCombinations();
-  }
+  // const handleExport = () => {
+  //   const headings = [headingsSebaDiary];
+  //   const wb = utils.book_new();
+  //   const ws = utils.json_to_sheet([]);
+  //   utils.sheet_add_aoa(ws, headings);
+  //   utils.sheet_add_json(ws, products, { origin: 'A2', skipHeader: true });
+  //   utils.book_append_sheet(wb, ws, 'Report');
+  //   utils.sheet_to_csv(ws, { FS: ";"})
+  //   writeFile(wb, 'products_seba_diary.csv');
+  //   handleExportCombinations();
+  // }
 
   const handleExportCombinations = () => {
     const headings = [headingsSebaCombinations]
@@ -66,7 +66,31 @@ const SebaMapper = () => {
   }
 
 
+  // function checkImage(url:string) {
+  //   var image = new Image();
+  //   image.onload = function() {
+  //     if (this.width > 0) {
+  //       return url;
+  //     }
+  //   }
+  //   image.onerror = function() {
+  //     return '';
+  //   }
+  //   image.src = url;
+  // }
 
+
+  function isValidImg( url:string ) {
+    return new Promise( function ( resolve, reject ) {
+
+        var image = new Image;
+
+        image.onload = function ( ) { resolve( image ) };
+        image.onerror = image.onabort = reject;
+
+        image.src = url;
+    } );
+}
 
   const normalizeReference = (reference:string) => {
     if(reference && reference.slice(-1) === "-" ) {
@@ -78,18 +102,18 @@ const SebaMapper = () => {
 
   const extractColorAndSizes = (products: []) => {
     const productList: any[] = [];
+    
+    products.map((item: {}) => {
+      // Delete 0 from stock yo not process  if (item.stock !== 0) {
+      const originReference = normalizeReference(item?.refmere);
+      productList.push({
+        ...item,
+        image: isValidImg(item?.image).then(() => item?.image).catch(err => ''),
+        refmere: originReference
+      })
 
-    // Delete 0 from stock yo not process
-    products.map((item, index:number) => {
-      if (item.stock !== 0) {
-        const originReference = normalizeReference(item?.refmere);
-
-        productList.push({
-          ...item,
-          refmere: originReference
-        })
-      };
-    }) 
+    });
+  
     const productsWithoutTransform = productList.filter(item => item);
     const productsList = sizesAndColorOfProducts(productsWithoutTransform);
     
