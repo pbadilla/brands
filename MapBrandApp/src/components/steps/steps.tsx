@@ -65,6 +65,7 @@ import Row from 'react-bootstrap/Row'
                 setIsValid(true);
 
                 const finalProducts = addActiveStatus(rows);
+                console.log('%c', 'color: #007acc;', finalProducts);
                 setProducts(groupProductsList(finalProducts));
                 setListName(groupProductsList(finalProducts));
             }
