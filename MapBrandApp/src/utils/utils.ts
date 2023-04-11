@@ -2,6 +2,26 @@ import { changeColor, changeSize, columnsSeba, headingsSeba } from './constants'
 import groupBy from 'lodash.groupby';
 import _, { constant } from 'lodash';
 
+
+
+export async function checkIfImageExists(url, callback) {
+  const img = new Image();
+  img.src = url;
+
+  if (img.complete) {
+    callback(true);
+  } else {
+    img.onload = () => {
+      callback(true);
+    };
+    
+    img.onerror = () => {
+      callback(false);
+    };
+  }
+}
+  
+
 export function findDiff(str1:string, str2:string) {
   const groupListProducts: string | any[] = [];
   let diff = "";
@@ -520,10 +540,10 @@ export function sizesAndColorOfProducts (allReferences: []) {
       if(item.refmere) {
         const compareString = findDiff(item.refmere, item.reference);
         allColors.push(extractColor(compareString as string));
-        allSizes.push(extractCSizes(compareString as string)); 
+        allSizes.push(extractCSizes(compareString as string));
 
         products.push ({
-          id: index+293,
+          id: index,
           active: 1,
           nombre: deleteSizes(item?.nom),
           categories: extractCategories(item.refmere),
@@ -541,6 +561,9 @@ export function sizesAndColorOfProducts (allReferences: []) {
         })
       }
     });
+
+    console.log('%cproducts', 'color: #007acc;', products);
+
     const grouped = _.mapValues(_.groupBy(products, 'referencia')); 
     for (const [key, value] of Object.entries(grouped)) {
       productsList.push(value[0])

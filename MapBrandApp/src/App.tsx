@@ -1,10 +1,11 @@
 import OtherMapper from './components/mappers/other'
 import PowerSlideMapper from './components/mappers/powerslide'
 import RollerbladeMapper from './components/mappers/Rollerblade'
+import RollerbladeCatalog from './components/mappers/RollerbladeCatalog'
 import RollerbladeMapperDiary from './components/mappers/RollerbladeDiary'
 import SebaMapper from './components/mappers/Seba'
 import ShopMapper from './components/mappers/Shop';
-import StepsDemo from './components/steps/steps';
+import StepsDemo from './components/mappers/steps/steps';
 
 import Intro from './components/pages/Intro'
 

@@ -1,9 +1,49 @@
-ssh-keygen -t ed25519 -C "pachibadilla@gmail.com"
+async function checkIfImageExists(url, callback) {
+    const img = new Image();
+    img.src = url;
 
-ssh-add ~/.ssh/id_ed25519
+    let isServerImageoK = false;
+
+    if (await img.complete) {
+      isServerImageoK = true;
+    } else if(await img.onload) { 
+      isServerImageoK = true;
+    } else if(await img.onerror) { 
+      isServerImageoK = false;
+    }
+
+    return isServerImageoK;
+  }
+  
+  const extractImagesServer = (products) => {
+    const urlImages = [];
+    products.map(item => {
+      urlImages.push(item?.image);
+    });
+    return urlImages;
+  }
 
 
+  const checkImagesServer = (images) => {
+    const urlImages = [];
+    let imageTemp: string = '';
+    images.map(item => {
 
-cat ~/.ssh/id_ed25519.pub
+      imageTemp = checkIfImageExists(item, (exists) => {
+        if (exists) {
+          return item
+        } else {
+          return ''
+        }
+      }); 
 
-git remote set-url origin git@github.com:pbadilla/brands.git
+      urlImages.push(imageTemp);
+    });
+    return urlImages;
+  }
+
+      const extractImages = extractImagesServer(products);
+
+    const checkImages = checkImagesServer(extractImages);
+    
+    console.log('%ccheckImages', 'color: #39790f;', checkImages);

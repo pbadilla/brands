@@ -1,10 +1,13 @@
 import React, { FC, useState, useEffect } from 'react'
 
+import Papa from "papaparse";
+
 import { read, utils, writeFile } from 'xlsx'
 import groupBy from 'lodash.groupby'
 import _, { constant } from 'lodash'
 import ScrollToTop from 'react-scroll-to-top'
 import DataTable, { ExpanderComponentProps } from 'react-data-table-component';
+import CsvDownloadButton from 'react-json-to-csv';
 
 import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
@@ -92,26 +95,42 @@ const RollerbladeMapper = () => {
     };
   }
 
+
+const fotoIsValid = (photos: []) => {
+
+  const existPhotos = photos.filter(item => item);
+
+  const withoutQuotes = JSON.stringify(existPhotos).replace (/"/g,'').replace ("[",'').replace ("]",'') ;
+
+  if (typeof withoutQuotes !== 'undefined' && withoutQuotes.length > 0) {
+    return withoutQuotes
+  } else return '';
+}
+
   const productsToExport =(products) => {
     const productsList = [];
     products.map((item, index: number) => {
+
+      const photos = fotoIsValid ([item.Foto3, item.Foto4, item.Foto5, item.Foto6, item.Foto7, item.Foto8]);
+
+      console.log('photos', photos);
+
       productsList.push({
-        id: index+78,
-        activo: 0,
-        nombre: item.ArtNombre,
-        categorias: changeFamily(item.Familia),
-        pvpr: item.PVPR,
-        referencia: item.VendorItemNo,
-        marca: item.Marca,
+        id: item.id,
+        active: 0,
+        name: item.ArtNombre,
+        SKU: item.SKU,
+        pvp: item.PVPR,
+        taxRulesID: 1,
+        reference: item.VendorItemNo,
+        brand: item.Marca,
         ean13: item.EAN,
         plazoEntrega: '2-4 dias',
-        cantidad: item.Udsxpack,
-        descricion: item.Descripcionlarga,
-        imagen: item.Foto,
-        deleteImages: 1,
-        metaTitulo: item.ArtNombre,
+        description: item.FEDAS,
+        images: photos,
+        metaTitle: item.ArtNombre,
         metaKeywords: changeFamily(item.Familia),  
-        metaDescripcion: truncateString(item.Descripcionlarga, 450)
+        metaDescription: truncateString(item.FEDAS, 500)
       })
     })
     return productsList;
@@ -155,23 +174,50 @@ const RollerbladeMapper = () => {
     // You can set state or dispatch with something like Redux so we can use the retrieved data
     console.log('Selected Rows: ', selectedRows);
   };
+
+  async function handleImportCSV() {
+    const res = await fetch('../../../assets/json/rb_products.json')
+    const data = await res.json()
+    console.log('%crbProductsFromJson', 'color: #007acc;', data);
+    setProducts(groupProductsList(data));
+    setListName(groupProductsList(data));
+  }
   
   return (
     <>
       <Container fluid>
           <Row>
-              <Col className="centerRow">
-                  <Form.Group controlId="formFile" className="mb-3">
-                      <Form.Label>Cargar CSV</Form.Label>
-                      <Form.Control type="file" required onChange={handleImport} accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
-                  </Form.Group>
+              <Col> 
+                <p>Datos extraídos del servidor FTPS de BMSportech: <strong>stocks.csv</strong></p>
+                <ul>
+                  <li><p>Fichero de todo el catálogo de productos diarios de Rollerblade</p></li>
+                </ul>                       
+                <Button type="button" variant="outline-primary" onClick={handleImportCSV}>
+                      Importar Datos Diarios
+                </Button>
               </Col>
               { listName.length > 0 &&
                   <>
                       <Col>
-                          <Button type="button" variant="outline-primary" onClick={handleExport}>
-                              Export Catalog Products
-                          </Button>
+
+                        <label>
+                        Export Products: 
+                        <CsvDownloadButton style={{ //pass other props, like styles
+                          boxShadow:"inset 0px 1px 0px 0px #e184f3",
+                          background:"linear-gradient(to bottom, #c123de 5%, #a20dbd 100%)",
+                          backgroundColor:"#c123de",
+                          borderRadius:"6px",
+                          border:"1px solid #a511c0",
+                          display:"inline-block",
+                          cursor:"pointer","color":"#ffffff",
+                          fontSize:"15px",
+                          fontWeight:"bold",
+                          padding:"6px 24px",
+                          textDecoration:"none",
+                          textShadow:"0px 1px 0px #9b14b3"
+                          }}
+                          data={productsToExport(products)} filename="rollerblade_catalog.csv" delimiter=";" />
+                      </label>
                       </Col>
                   </>
               }
@@ -200,17 +246,13 @@ const RollerbladeMapper = () => {
                     selectableRows
                     striped={true}
                     title="ROLLERBLADE"
-
                   />
                   <ScrollToTop smooth />
                 </>
               ) 
               :(
                 <>
-                  <p>Datos contenidos en el fichero: <strong>pricat_rollerblade_20221110.xlsx</strong></p>
-                  <ul>
-                    <li><p>Fichero de todo el catálogo de productos anuales de Rollerblade</p></li>
-                  </ul>
+                  <p>Esperando cargar los datos</p>
                 </>
               )}
               </Col>

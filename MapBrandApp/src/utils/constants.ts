@@ -63,17 +63,19 @@ export const headingsRollerblade = [
 ]
 
 export const headingsRlbDiary = [
+  'Id',
   'Activo',
-  'CodProducto',
+  'Referencia',
   'Marca',
-  'PVP',
-  'Stock'
+  'Precio Impuestos incluidos',
+  'Cantidad'
 ]
 
 export const headingsRlbDiaryCombinations = [
   'codigo',
   'attribute',
-  'value'
+  'value',
+  'cantidad'
 ]
 
 export const headersRlbCatalog = [
@@ -92,8 +94,6 @@ export const headersRlbCatalog = [
   "Año",
   "Marca",
   "Familia",
-  "Linea",
-  "Tipo",
   "Estacion",
   "Udsxpack",
   "CantidadMinima",
@@ -537,7 +537,7 @@ export const columnsRollerblade = [
   },
   {
     name: 'Descripcion larga',
-    selector: row => row.Descripcionlarga,
+    selector: row => row.description,
     sortable: true,
     maxWidth: '200px'
   },
@@ -549,7 +549,7 @@ export const columnsRollerblade = [
   },
   {
     name: 'Foto',
-    selector: row => row.Foto,
+    selector: row => row.images,
     sortable: true,
     maxWidth: '130px'
   },

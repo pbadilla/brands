@@ -8,6 +8,8 @@ import _, { constant } from 'lodash'
 import ScrollToTop from 'react-scroll-to-top'
 import DataTable, { ExpanderComponentProps } from 'react-data-table-component';
 
+import rbCatalog from '../../../assets/catalog'
+
 import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
@@ -20,31 +22,40 @@ import { columnsRlbDiary, headingsRlbDiary, headingsRlbDiaryCombinations } from 
 
 import './styles.css'
 
-const RollerbladeMapperDiary = () => {
+const RollerbladeCatalog = () => {
   const [listName, setListName] = useState([])
   const [listSizes, setListSizes] = useState([])
+  const [catalog, setCatalog] = useState([])
+
   const [listProductSizes, setListProductSizes] = useState([])
   const [pending, setPending] = useState<boolean>(true);
 
-  const handleImport = (event: any) => {
-    const files = event.target.files
-    if (files.length) {
-      const file = files[0]
-      const reader = new FileReader()
-      reader.onload = (event) => {
-        const wb = read(event?.target?.result)
-        const sheets = wb.SheetNames
 
-        if (sheets.length > 0) {
-          const rows = utils.sheet_to_json(wb.Sheets[sheets[0]], {rawNumbers:false, raw:false});
-          const finalProducts = changesFields(rows as any);
-          setListName(groupProductsList(finalProducts as any));
-          setListProductSizes(exportSizes(finalProducts));
+  useEffect(() => {
+    setCatalog(groupProductsListCatalog(rbCatalog as any));
+  }, [rbCatalog]);
+
+    const handleImport = (event: any) => {
+      const files = event.target.files
+      if (files.length) {
+        const file = files[0]
+        const reader = new FileReader()
+        reader.onload = (event) => {
+          const wb = read(event?.target?.result)
+          const sheets = wb.SheetNames
+
+          if (sheets.length > 0) {
+            const rows = utils.sheet_to_json(wb.Sheets[sheets[0]], {rawNumbers:false, raw:false});
+            const finalProducts = changesFields(rows as any);
+            setListName(groupProductsList(finalProducts as any));
+            setListProductSizes(exportSizes(finalProducts));
+          }
         }
+        reader.readAsArrayBuffer(file)
       }
-      reader.readAsArrayBuffer(file)
     }
-  }
+
+    console.log('%cRollerbladeCatalog.tsx line:58 catalog', 'color: #007acc;', catalog);
 
   const changesFields = (products: []) => {
     const productsList: any[] = []
@@ -103,13 +114,11 @@ const RollerbladeMapperDiary = () => {
 
   const exportSizesProducts = (products: prodExport) => {
     const productsListSizes: any[] = []
-    products.map((item: pushProducts, index: any) => {
-      productsListSizes.push({
-        talla: item.Talla,
-        reference: item.CodSuperior,
-        stock: parseInt(item.Stock)
-      })
-    })
+    products.map((item: pushProducts, index: any) => productsListSizes.push({
+      talla: item.Talla,
+      reference: item.CodSuperior,
+      stock: parseInt(item.Stock)
+    }))
 
     return productsListSizes;
   }
@@ -134,6 +143,28 @@ const RollerbladeMapperDiary = () => {
       value: joinSizes(item.sizes, item.stock).join(',')
     })
   });
+
+  const groupProductsListCatalog = (products) => {
+    const productsList = [];
+
+    products.map((item, index) => productsList.push({
+      reference: item["Art. Codigo"],
+      name: item["Art. Nombre"], "Año": "23",
+      color: item["Color Base"],
+      description: item["Descripcion larga"],
+      ean: item["EAN"],
+      familia: item["Familia"],
+      photos: [item["Foto"], item["Foto2"], item["Foto3"], item["Foto4"], item["Foto5"], item["Foto6"]],
+      brand: item["Marca"],
+      pvpr: item["PVPR"],
+      sku: item["SKU"],
+      size: item["Talla EUR"]
+    }))
+
+    return productsList;
+
+  }
+
 
   const groupProductsList = (products) => {
     const productsList: Array<string> = [];
@@ -312,4 +343,4 @@ const RollerbladeMapperDiary = () => {
   )
 }
 
-export default RollerbladeMapperDiary
+export default RollerbladeCatalog
