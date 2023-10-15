@@ -537,32 +537,32 @@ export function sizesAndColorOfProducts (allReferences: []) {
     const productsToExport: (string | undefined)[] = [];
    
     allReferences.map((item, index) => {
-      if(item.refmere) {
-        const compareString = findDiff(item.refmere, item.reference);
+      if(item.Refmere) {
+        const compareString = findDiff(item.Refmere, item.Reference);
         allColors.push(extractColor(compareString as string));
         allSizes.push(extractCSizes(compareString as string));
 
         products.push ({
           id: index,
           active: 1,
-          nombre: deleteSizes(item?.nom),
-          categories: extractCategories(item.refmere),
-          pvpr: parseFloat(item?.prix * 1.8).toFixed(2),
-          referencia: makeReference(item?.reference.toString(), item?.refmere.toString()),
-          marca: item?.marque,
-          ean13: JSON.stringify(item?.ean),
-          quantity: parseInt(item?.stock),
-          description: deleteSizes(item?.nom),
-          imagen: item?.image,
-          metaTitle: deleteSizes(item?.nom),
-          metaKeywords: extractCategories(item.refmere),
-          metaDescription: deleteSizes(item?.nom),
+          nombre: deleteSizes(item?.Nom),
+          categories: extractCategories(item.Refmere),
+          pvpr: parseFloat(item?.Prix * 1.8).toFixed(2).toString().replace(",", "."),
+          referencia: makeReference(item?.Reference.toString(), item?.Refmere.toString()),
+          marca: item?.Marque,
+          ean13: JSON.stringify(item?.Ean),
+          quantity: parseInt(item?.Stock),
+          description: deleteSizes(item?.Nom),
+          imagen: item?.Image,
+          metaTitle: deleteSizes(item?.Nom),
+          metaKeywords: extractCategories(item.Refmere),
+          metaDescription: deleteSizes(item?.Nom),
           deleteAllImages: 1
         })
       }
     });
 
-    console.log('%cproducts', 'color: #007acc;', products);
+    // console.log('%cproducts', 'color: #007acc;', products);
 
     const grouped = _.mapValues(_.groupBy(products, 'referencia')); 
     for (const [key, value] of Object.entries(grouped)) {
@@ -570,16 +570,16 @@ export function sizesAndColorOfProducts (allReferences: []) {
     }
 
     allReferences.map((item, index:number) => {
-      if(item?.refmere) {
-        const compareString = findDiff(item.refmere, item.reference);
+      if(item?.Refmere) {
+        const compareString = findDiff(item.Refmere, item.Reference);
         
         productsToExport.push ({
           id: index,
-          referencia: makeReference(item?.reference.toString(), item?.refmere.toString()),
+          referencia: makeReference(item?.Reference.toString(), item?.Refmere.toString()),
           attributes: extractCSizes(compareString as string) ? `Talla:select:0` : '',
           values: extractCSizes(compareString as string)  ? `${extractCSizes(compareString as string)}:0` : '',         
-          ean13: item?.ean,
-          quantity: parseInt(item?.stock)
+          ean13: item?.Ean,
+          quantity: parseInt(item?.Stock)
         })
       }
     });
@@ -632,7 +632,7 @@ const joinAttributes = (arraySizes: string[]) => {
 //   return({
 //     codigo: item.codigo,
 //     attribute: joinAttributes(item.sizes).join(','),
-//     value: joinSizes(item.sizes, item.stock).join(',')
+//     value: joinSizes(item.sizes, item.Stock).join(',')
 //     // quantity: item.quantity
 //   })
 // });

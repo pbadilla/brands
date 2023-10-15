@@ -1,7 +1,5 @@
 import React, { FC, useState, useEffect } from 'react'
 
-import Papa from "papaparse";
-
 import { read, utils, writeFile } from 'xlsx'
 import groupBy from 'lodash.groupby'
 import _, { constant } from 'lodash'
@@ -112,8 +110,6 @@ const fotoIsValid = (photos: []) => {
     products.map((item, index: number) => {
 
       const photos = fotoIsValid ([item.Foto3, item.Foto4, item.Foto5, item.Foto6, item.Foto7, item.Foto8]);
-
-      console.log('photos', photos);
 
       productsList.push({
         id: item.id,

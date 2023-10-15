@@ -1,9 +1,12 @@
 const ftp = require("basic-ftp")
 let csvToJson = require('convert-csv-to-json');
+const fs = require('fs');
+const axios = require('axios')
 
-example()
+rollerblade()
+seba()
 
-async function example() {
+async function rollerblade() {
     const client = new ftp.Client()
     client.ftp.verbose = true
     try {
@@ -34,3 +37,35 @@ async function example() {
     }
     client.close()
 }
+
+async function seba() {
+    const username = "csvuniverskate";
+    const password = "UdQ4SKATE7PytND";
+    const url = "http://csvshops.universkate.com/UniverskateStock.csv";
+
+    let fileInputName = 'assets/csv/seba.csv'; 
+    let fileOutputName = 'assets/json/seba_products.json';
+
+    axios.get(url, {
+        auth: {
+            username: username,
+            password: password
+        }
+    })
+    .then(res=> {
+        fs.appendFileSync(fileInputName, res.data);
+        fs.stat(fileInputName, (error, stats) => {
+            if (error) {
+              console.log(error);
+            }
+            else {
+              console.log("Path is file:", stats.isFile());
+              csvToJson.generateJsonFileFromCsv(fileInputName,fileOutputName);
+            }
+          })
+          
+    })
+    .catch(err=> console.log(err))
+};
+
+

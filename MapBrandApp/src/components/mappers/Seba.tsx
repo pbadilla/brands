@@ -1,4 +1,5 @@
 import React, { FC, useState, useEffect } from 'react'
+import axios from 'axios'
 
 import CsvDownloadButton from 'react-json-to-csv'
 
@@ -17,11 +18,18 @@ import { checkIfImageExists, sizesAndColorOfProducts } from '../../utils/utils';
 
 import './styles.css'
 
+import * as SEBA_PRODUCTS from '../../../assets/json/seba_products.json';
+
 const SebaMapper = () => {
   const [products, setProducts] = useState([])
   const [productsForCombinations, setProductsForCombinations] = useState([])
   const [listName, setListName] = useState([])
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
+  
+  useEffect(() => {
+    let arr = Object.keys(SEBA_PRODUCTS).map((k) => SEBA_PRODUCTS[k])
+    extractColorAndSizes(arr[0]);
+  }, []);
 
   const handleImport = ($event) => {
     const files = $event.target.files
@@ -65,33 +73,6 @@ const SebaMapper = () => {
     writeFile(wb, 'products_seba_diary_combinations.csv')
   }
 
-
-  // function checkImage(url:string) {
-  //   var image = new Image();
-  //   image.onload = function() {
-  //     if (this.width > 0) {
-  //       return url;
-  //     }
-  //   }
-  //   image.onerror = function() {
-  //     return '';
-  //   }
-  //   image.src = url;
-  // }
-
-
-  function isValidImg( url:string ) {
-    return new Promise( function ( resolve, reject ) {
-
-        var image = new Image;
-
-        image.onload = function ( ) { resolve( image ) };
-        image.onerror = image.onabort = reject;
-
-        image.src = url;
-    } );
-}
-
   const normalizeReference = (reference:string) => {
     if(reference && reference.slice(-1) === "-" ) {
       return reference.slice(0, -1)
@@ -105,15 +86,16 @@ const SebaMapper = () => {
     
     products.map((item: {}) => {
       // Delete 0 from stock yo not process  if (item.stock !== 0) {
-      const originReference = normalizeReference(item?.refmere);
+      const originReference = normalizeReference(item?.Refmere);
       productList.push({
         ...item,
-        image: isValidImg(item?.image).then(() => item?.image).catch(err => ''),
         refmere: originReference
       })
 
     });
   
+    console.log("productList", productList);
+    
     const productsWithoutTransform = productList.filter(item => item);
     const productsList = sizesAndColorOfProducts(productsWithoutTransform);
     
@@ -157,7 +139,7 @@ const SebaMapper = () => {
               </Col>
               { listName.length > 0 &&
                   <>
-<Col>
+                    <Col>
                       <label>
                         Export Products: 
                         <CsvDownloadButton style={{ //pass other props, like styles
@@ -207,7 +189,7 @@ const SebaMapper = () => {
               <Col>
               { listName.length > 0 
                 ? (
-                  <>;
+                  <>
                     <DataTable
                       columns={columnsSeba}
                       data={listName}
@@ -229,7 +211,7 @@ const SebaMapper = () => {
                 ) 
                 : (
                   <>
-                    <p>Datos del FTP</p>
+                    <p>Para bajada manual del catálogo: FTP</p>
                     <ul>
                       <li>
                         <span>url : <a href="http://csvshops.universkate.com/UniverskateStock.csv">Enlace</a></span>

@@ -36,16 +36,19 @@ function App () {
             <Tab eventKey="seba" title="SEBA">
               <SebaMapper />
             </Tab>
-            <Tab eventKey="rollerblade" title="RLB_catalog">
+            {/* <Tab eventKey="rollerblade" title="RLB download Catalog">
               <RollerbladeMapper />
+            </Tab> */}
+            <Tab eventKey="rollerblade_catalog" title="RLB Catalog">
+              <RollerbladeCatalog />
             </Tab>
-            <Tab eventKey="rollerblade_diary" title="RLB_Diary">
+            <Tab eventKey="rollerblade_diary" title="RLB Diary">
               <RollerbladeMapperDiary />
             </Tab>
             <Tab eventKey="powerslide" title="POWERSLIDE">
               <PowerSlideMapper />
             </Tab>
-            <Tab eventKey="shop" title="Solo Tienda">
+            {/* <Tab eventKey="shop" title="Solo Tienda">
               <ShopMapper />
             </Tab>
             <Tab eventKey="tienda" title="Stock Tienda">
@@ -53,7 +56,7 @@ function App () {
             </Tab>
             <Tab eventKey="steps" title="Steps">
               <StepsDemo />
-            </Tab>
+            </Tab> */}
           </Tabs>
         </Col>
       </Row>

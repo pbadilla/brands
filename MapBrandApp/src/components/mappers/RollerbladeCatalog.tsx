@@ -55,8 +55,6 @@ const RollerbladeCatalog = () => {
       }
     }
 
-    console.log('%cRollerbladeCatalog.tsx line:58 catalog', 'color: #007acc;', catalog);
-
   const changesFields = (products: []) => {
     const productsList: any[] = []
     products.map((item, index) => {
@@ -156,15 +154,15 @@ const RollerbladeCatalog = () => {
       familia: item["Familia"],
       photos: [item["Foto"], item["Foto2"], item["Foto3"], item["Foto4"], item["Foto5"], item["Foto6"]],
       brand: item["Marca"],
-      pvpr: item["PVPR"],
+      pvpr: item["PVPR"].replace(",", "."),
       sku: item["SKU"],
       size: item["Talla EUR"]
     }))
 
+    // console.log('%cRollerbladeCatalog.tsx line:164 productsList', 'color: #007acc;', productsList);
     return productsList;
 
   }
-
 
   const groupProductsList = (products) => {
     const productsList: Array<string> = [];
@@ -205,7 +203,7 @@ const RollerbladeCatalog = () => {
     utils.sheet_to_csv(wb, { FS: ";"})
     return ws;
 
-    // writeFile(wb, 'products_rollerblade_diary.csv');
+    writeFile(wb, 'products_rollerblade_diary.csv');
     handleExportCombinations();
   }
 
@@ -238,6 +236,11 @@ const RollerbladeCatalog = () => {
     return <pre>{JSON.stringify(sortedData, null, 2)}</pre>;
   };
 
+  const handleChange = ({ selectedRows }) => {  
+    // You can set state or dispatch with something like Redux so we can use the retrieved data
+    console.log('Selected Rows: ', selectedRows);
+  };
+  
   
   return (
     <>
@@ -268,10 +271,10 @@ const RollerbladeCatalog = () => {
                           textDecoration:"none",
                           textShadow:"0px 1px 0px #9b14b3"
                           }}
-                      data={listName} filename="rollerblade_products.csv" delimiter=";" />
+                      data={exportProducts(listName)} filename="rollerblade_products.csv" delimiter=";" />
                       </label>
                       </Col>
-                      <Col>
+                      {/* <Col>
                        <label>
                         Export Products: 
                         <CsvDownloadButton style={{ //pass other props, like styles
@@ -290,7 +293,7 @@ const RollerbladeCatalog = () => {
                           }}
                           data={listProductSizes} filename="rollerblade_products_combinations.csv" delimiter=";" />
                       </label>
-                      </Col>
+                      </Col> */}
                   </>
               }
           </Row>
@@ -325,7 +328,7 @@ const RollerbladeCatalog = () => {
               ) 
               : (
                 <>
-                  <p>Datos del FTP</p>
+                  {/* <p>Datos del FTP</p>
                   <p>Datos contenidos en el fichero CSV: <strong>rollergrind360_bm.csv</strong></p>
                     <ul>
                       <li>
@@ -333,7 +336,7 @@ const RollerbladeCatalog = () => {
                       </li>
                       <li><span>User:</span> <strong>cliente_rollergrind360</strong></li>
                       <li><span>Password:</span> <strong>aue9kpr@DPV.hgp7ufz</strong></li>
-                    </ul>
+                    </ul> */}
                 </>
               )}
               </Col>

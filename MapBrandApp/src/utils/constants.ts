@@ -692,7 +692,7 @@ export const columnsShop = [
   },
   {
     name: 'imagen',
-    // cell: ({ row }) => (<Link to={{ pathname: `${row.url}` }}>{row.url}</Link>),0>
+    // cell: ({ row }) => (<Link to={{ pathname: `${row.url}` }}>{row.url}</Link>)
     cell: row => row.url,
     ignoreRowClick: true,
     allowOverflow: true,

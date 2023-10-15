@@ -47,3 +47,16 @@ async function checkIfImageExists(url, callback) {
     const checkImages = checkImagesServer(extractImages);
     
     console.log('%ccheckImages', 'color: #39790f;', checkImages);
+
+
+    function isValidImg( url:string ) {
+      return new Promise( function ( resolve, reject ) {
+  
+          var image = new Image;
+  
+          image.onload = function ( ) { resolve( image ) };
+          image.onerror = image.onabort = reject;
+  
+          image.src = url;
+      } );
+  }
